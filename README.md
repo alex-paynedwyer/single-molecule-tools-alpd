@@ -1,11 +1,8 @@
-# Single molecule tools
+# Single molecule tools (Alex Payne-Dwyer)
 
-A series of Matlab functions and scripts for tracking and quantification of spots in images, deconvolution, segmentation and simulation.
+Forked from single-molecule-tools (authors Adam Wollman and Isabel Llorente-Garcia); See [website](https://awollman.github.io/single-molecule-tools/).
 
-Useful for analysing localisation microscopy, step-wise photobleaching  , STORM, PALM, SHRIMP, FRAP and regular fluorescence microscopy data.
-
-See [website](https://awollman.github.io/single-molecule-tools/) for more info or jump to the relevant folder.
-
+A series of Matlab functions and scripts for tracking and quantification of spots in images, deconvolution, segmentation and simulation. Also capable of estimating single molecule concentrations from volumetric models and 2D images.  Useful for localisation microscopy, step-wise photobleaching, STORM, PALM, SHRIMP, FRAP and regular fluorescence microscopy data.  Novel additions include distribution-based estimates of periodic clustering in molecular assemblies.
 
 ### Guide to setting up github source control in matlab
 
