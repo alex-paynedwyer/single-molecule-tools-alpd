@@ -1,45 +1,31 @@
-function [SpotsCh1, SpotsCh2, frame_average,p, meta_data, image_data,spotImages] = tracker(fileName,p)
+function [SpotsCh1, SpotsCh2, frame_average,p, meta_data, image_data] = tracker(fileName,p)
 
-%%
-% NEW in 2.84
-% checks for saturated frames
-% NEW IN 2.81
-% Rsquare of 2D gaussian fits;
-% !!!!!!!RSQUARE REPLACES CLIPPING FLAG IN SPOT ARRAY!!!!!!!!!
-% NEW IN 2.5
-% can fit a fully rotating Gaussian using GaussSwitch=3;
-% !!!!!!!THETA REPLACES CLIPPING FLAG IN SPOT ARRAY!!!!!!!!!
-% NEW IN 2.4
-% - choose to run in parallel or not by setting p.useParallel=1;
-%- >2x speed improvements from optomisation in linking trajectories and
-%removing coincident ones
-%-2 levels of output set with show_output and show_all_output
-% NEW IN 2.0
-% -set useBioFormats to open ANY IMAGE FORMAT and extract metadata
-% NB need file extention for this mode
-% NB EXCEPT SIF FILES?!
-% -removes candidates which are too close together to produce distinct
-% spots, saves time
-% -new iterative Gaussian masking to determine PSFwidth but only 1D, gives
-% ~8x speed increase, set GaussSwitch=1 for this or =2 for full 2D fitting
-
-% NEW IN 1.3
-% ExtractImageSequence3 can now read in ascii data
-% NEW IN 1.2
-% ExtractImageSequence2 can now read in folders of tifs (BUGGY, NEED TO
-% FIX)
-% If FramesToTrack==0, then code tracks all frames available
-
-%%
-
-% Final code for opening tif data, calculating frame average, using this to determine
-%cell boundary, then looping over user defined frames, finding spots,
-%identifying their centres and accepting them if they meet criteria, then
-%linking these spots together into trajectories
-
-%readData=1 if reading tif file or 0 if already loaded
-
-    %
+% Code for tracking bright foci in image stacks
+%INPUTS
+%filename: name of image stack or folder containing series of tifs
+%p: parameter structure (see below for details) if not set default values
+%used
+%OUTPUTs
+% SpotsCh1/2 is an array, each row contains the information for a spot found in an image frame in the series. The columns contain the following information:
+% 
+% 1. X coordinate (pixels)
+% 2. Y coordinate (pixels)
+% 3. Clipping_flag (a switch, please ignore)
+% 4. Mean local background pixel intensity
+% 5. Total spot intensity, background corrected
+% 6. X spot sigma width
+% 7. Y spot sigma width
+% 8. Spot central intensity (peak intensity in a fitted Gaussian)
+% 9. Frame number the spot was found in
+% 10. Trajectory number, spots in the same trajectory have the same trajectory number
+% 11. Signal to noise ratio
+% 12. Frame in which laser exposure began
+% 
+%frame_average: frame average image
+%p: output parameters
+% meta_data: any meta_data stored in the image
+%image_data: the raw imaging data tracked
+% spotImages: every spot tracked - NOT RECOMMENDED TO USE
 
 if exist('p','var')==1
     %Read in parameters
@@ -114,6 +100,9 @@ p.noFrames=5; % number of frames to average over, starting from start_frame. (de
     p.all=1; %Use this keyword to load entire image file
     p.startFrame=1; % Or specify start and end frames
     p.endFrame=999;
+    p.firstLeft=2; %If determine first frames=0 these are used
+    p.firstRight=1;
+    
     
     %Specify how many frames to track after the laser has switched on
     p.FramesToTrack=0;
@@ -201,11 +190,9 @@ if p.DetermineFirstFrames==1
     [firstLeft, firstRight, ~, ~] = LaserOn3(image_data, p.use_diff,p.ALEX);
     disp('start determined')
 else
-    firstLeft=1;
-    firstRight=1;
-    if p.ALEX==1
-        firstRight=2;
-    end
+    firstLeft=p.firstLeft;
+    firstRight=p.firstRight;
+
 end
 
 %Number of frames to track
@@ -238,7 +225,7 @@ end
 for Ch=p.start_channel:p.end_channel
     % Initialise spot array
     spots=[];
-    spotImages=[];
+  %  spotImages=[];
     
     
     if p.ALEX==0
@@ -343,9 +330,10 @@ for Ch=p.start_channel:p.end_channel
                     [result2] = findSpots3(frame,2,p.disk_radius,p.gaussian,0);
                     result=result1+result2;
                     result(result>1)=1;
+                    resulthin=bwmorph(result,'thin',Inf);
             end
             % Convert those to spot co-ordinates
-            [y_estimateTemp, x_estimateTemp]=ind2sub(size(result), find(result));
+            [y_estimateTemp, x_estimateTemp]=ind2sub(size(resulthin), find(resulthin));
             %  [y_estimate, x_estimate]=ind2sub(size(result), find(result));
             % Remove candidates which are too close together to yield
             % seperate spots-
@@ -372,7 +360,7 @@ for Ch=p.start_channel:p.end_channel
         %% FIT TO SPOTS AND REJECT
         %Loop over all found spots
         spots_temp=zeros(size(x_estimate,1),12);
-        spotImageTemp=zeros(p.subarray_halfwidth*2+1,p.subarray_halfwidth*2+1,size(x_estimate,1));
+        %spotImageTemp=zeros(p.subarray_halfwidth*2+1,p.subarray_halfwidth*2+1,size(x_estimate,1));
         if p.useParallel==1 % use a parfor loop
             parfor j=1:size(x_estimate,1)
                 if p.use_cursor==1
@@ -409,39 +397,73 @@ for Ch=p.start_channel:p.end_channel
                         end
                         % The spot array, 10th field is trajectory number,
                         % initialised to 0
-                        spotImageTemp(:,:,j)=Idata;
+                      %  spotImageTemp(:,:,j)=Idata;
                         
                     end
                 end
                 
             end
-            spotImageTemp(:,:,spots_temp(:,1)==0)=[];
+         %   spotImageTemp(:,:,spots_temp(:,1)==0)=[];
             spots_temp(spots_temp(:,1)==0,:)=[]; 
             % get rid of identical spots, within ~d_min of each other
             
             if isempty(spots_temp)==0
-                [~,ia,~]=uniquetol(spots_temp(:,1)+spots_temp(:,2),p.d_min/max(spots_temp(:,1)+spots_temp(:,2)));
+                            if p.show_output==1
+                imshow(frame,[],'InitialMagnification','fit')%HM modify magnification
+                hold on
+                title('Found elipses on original image before conincidents removed')
+                %    plot(spots(spots(:,9)==i,1),spots(spots(:,9)==i,2), 'o')
+                %Plot elipses on original image
+                if p.GaussSwitch==3
+                    h=ellipse(spots_temp(spots_temp(:,9)==i,6),spots_temp(spots_temp(:,9)==i,7),spots_temp(spots_temp(:,9)==i,3),spots_temp(spots_temp(:,9)==i,1),spots_temp(spots_temp(:,9)==i,2),'b');
+                    for k=min(find(spots_temp(:,9)==i)):max(find(spots_temp(:,9)==i))
+                        text(spots_temp(k,1)+3,spots_temp(k,2)+3,num2str(k),'color','b')
+                        % rectangle('Position',[spots(k,1)-spots(k,6)/2,spots(k,2)-spots(k,7)/2,spots(k,6),spots(k,7)],'Curvature',[1,1],'EdgeColor','b')
+                        %rectangle('Position',[spots(k,1)-spots(k,6),spots(k,2)-spots(k,7),spots(k,6)*2,spots(k,7)*2],'Curvature',[1,1],'EdgeColor','b')
+                    end
+                else
+                    for k=min(find(spots_temp(:,9)==i)):max(find(spots_temp(:,9)==i))
+                        text(spots_temp(k,1)+3,spots_temp(k,2)+3,num2str(k),'color','b')
+                        % rectangle('Position',[spots(k,1)-spots(k,6)/2,spots(k,2)-spots(k,7)/2,spots(k,6),spots(k,7)],'Curvature',[1,1],'EdgeColor','b')
+                        rectangle('Position',[spots_temp(k,1)-spots_temp(k,6),spots_temp(k,2)-spots_temp(k,7),spots_temp(k,6)*2,spots_temp(k,7)*2],'Curvature',[1,1],'EdgeColor','b')
+                    end
+                end
+                
+                hold off
+                pause
+            end
+                
+                
+           %     [~,ia,~]=uniquetol(spots_temp(:,1)+spots_temp(:,2),p.d_min/max(spots_temp(:,1)+spots_temp(:,2)));
+        if p.d_min>0
+                [spots_temp2,ia]=MergeCoincidentSpots4(spots_temp, p.d_min);
+            else
+                spots_temp2=spots_temp;
+                ia=1:size(spots_temp,1);
+            end
+         % [~,ia,~]=uniquetol(spots_temp(:,1)+spots_temp(:,2),p.d_min);
+
               %  [~,ia,~]=unique(spots_temp(:,1)+spots_temp(:,2));
        %       try
-                spots_temp2=spots_temp(ia,:);
+             %   spots_temp2=spots_temp(ia,:);
 %               catch
 %                   spots_temp(ia,:)
 %                   spots_temp
 %               end
 
-                spotImageTemp2=spotImageTemp(:,:,ia);
+%                spotImageTemp2=spotImageTemp(:,:,ia);
 
             end
             
             % wipe the stored spot image array if spotImageSave=0 to save
             % memory
-            if p.spotImageSave==0
-                spotImageTemp2=[];
-            end
+%             if p.spotImageSave==0
+%                 spotImageTemp2=[];
+%             end
             
             if exist('spots_temp2')
             spots=cat(1,spots,spots_temp2);
-            spotImages=cat(3,spotImages,spotImageTemp2);
+           % spotImages=cat(3,spotImages,spotImageTemp2);
             end
         else %use a regular for loop
             for j=1:size(x_estimate,1)
@@ -482,30 +504,61 @@ for Ch=p.start_channel:p.end_channel
                         % The spot array, 10th field is trajectory number,
                         % initialised to 0
                         
-                          spotImageTemp(:,:,j)=Idata;
+                         % spotImageTemp(:,:,j)=Idata;
                   %      spots_temp(j,:)=[x_centre, y_centre, clipping_flag, Ibg_avg, Isp, sdx, sdy, Icent, i,trajNo, snr1, firstLeft];
                     end
                 end
                 
             end
-            spotImageTemp(:,:,spots_temp(:,1)==0)=[];
+          %  spotImageTemp(:,:,spots_temp(:,1)==0)=[];
 
             spots_temp(spots_temp(:,1)==0,:)=[]; %HM, gets rid of empty rows
             % get rid of identical spots, within ~d_min of each other
-            
             if isempty(spots_temp)==0
-                [~,ia,~]=uniquetol(spots_temp(:,1)+spots_temp(:,2),p.d_min/max(spots_temp(:,1)+spots_temp(:,2)));
-                spots_temp2=spots_temp(ia,:);
-                spotImageTemp2=spotImageTemp(:,:,ia);
+            if p.show_output==1
+                imshow(frame,[],'InitialMagnification','fit')%HM modify magnification
+                hold on
+                title('Found elipses on original image before conincidents removed')
+                %    plot(spots(spots(:,9)==i,1),spots(spots(:,9)==i,2), 'o')
+                %Plot elipses on original image
+                if p.GaussSwitch==3
+                    h=ellipse(spots_temp(spots_temp(:,9)==i,6),spots_temp(spots_temp(:,9)==i,7),spots_temp(spots_temp(:,9)==i,3),spots_temp(spots_temp(:,9)==i,1),spots_temp(spots_temp(:,9)==i,2),'b');
+                    for k=min(find(spots_temp(:,9)==i)):max(find(spots_temp(:,9)==i))
+                        text(spots_temp(k,1)+3,spots_temp(k,2)+3,num2str(k),'color','b')
+                        % rectangle('Position',[spots(k,1)-spots(k,6)/2,spots(k,2)-spots(k,7)/2,spots(k,6),spots(k,7)],'Curvature',[1,1],'EdgeColor','b')
+                        %rectangle('Position',[spots(k,1)-spots(k,6),spots(k,2)-spots(k,7),spots(k,6)*2,spots(k,7)*2],'Curvature',[1,1],'EdgeColor','b')
+                    end
+                else
+                    for k=min(find(spots_temp(:,9)==i)):max(find(spots_temp(:,9)==i))
+                        text(spots_temp(k,1)+3,spots_temp(k,2)+3,num2str(k),'color','b')
+                        % rectangle('Position',[spots(k,1)-spots(k,6)/2,spots(k,2)-spots(k,7)/2,spots(k,6),spots(k,7)],'Curvature',[1,1],'EdgeColor','b')
+                        rectangle('Position',[spots_temp(k,1)-spots_temp(k,6),spots_temp(k,2)-spots_temp(k,7),spots_temp(k,6)*2,spots_temp(k,7)*2],'Curvature',[1,1],'EdgeColor','b')
+                    end
+                end
+                
+                hold off
+                pause
             end
             
-          if p.spotImageSave==0
-                spotImageTemp2=[];
+            
+            %    [~,ia,~]=uniquetol(spots_temp(:,1)+spots_temp(:,2),p.d_min/max(spots_temp(:,1)+spots_temp(:,2)));
+            if p.d_min>0
+                [spots_temp2,ia]=MergeCoincidentSpots4(spots_temp, p.d_min);
+            else
+                spots_temp2=spots_temp;
+                ia=1:size(spots_temp,1);
             end
+            %    spots_temp2=spots_temp(ia,:);
+           %     spotImageTemp2=spotImageTemp(:,:,ia);
+            end
+            
+%           if p.spotImageSave==0
+%                 spotImageTemp2=[];
+%             end
             
             if exist('spots_temp2')
             spots=cat(1,spots,spots_temp2);
-              spotImages=cat(3,spotImages,spotImageTemp2);
+           %   spotImages=cat(3,spotImages,spotImageTemp2);
             end
         end
         
