@@ -9,11 +9,11 @@ if ~exist('params')
 end
 
 %select appropriate channel
-ch =1; %1;                         %INPUT REQUIRED
+ch =2; %1;                         %INPUT REQUIRED
 
-showlinked =0;
-showunlinked =0;
-showtotal =1;
+showlinked =1;
+showunlinked =1;
+showtotal =0;
 
 if ch==1
     dispcolorL = 'red';
@@ -50,7 +50,7 @@ if showtotal ==1
     hold on
 end
 
-xlabel('Trajectories per cell')
+xlabel('Tracks per cell')
 ylabel('Frequency (cells)')
 axis tight
 pbaspect([1 1 1]);
