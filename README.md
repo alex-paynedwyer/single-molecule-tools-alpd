@@ -47,7 +47,7 @@ In principle, it is therefore also compatible with .czi and other image stack ty
 The input image sequence files must be organised in a nested folder hierarchy: `DATASET/DATE/SAMPLE/FIELD/IMAGES`  
 i.e. in the format `"\*/2YYY-MM-DD/sample\*/field\*/\*.tif"`.
 
-`mergeFolders` is a macro for arranging folders into this structure, for example if alternating odd- and even- numbered acquisitions correspond to brightfield and then SlimVar sequences for each field of view.
+`mergeFolders` is a macro for arranging folders into this structure, for example if alternating odd- and even- numbered acquisitions correspond to subsequent brightfield and SlimVar sequences for each field of view.
 
 ## Segmentation
 
