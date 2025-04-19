@@ -47,7 +47,7 @@ Various functions for segmenting cells. All use connected areas to create distin
 `edgeSegment`: Detects edges in the image and dilates to fill in regions in between.  
 `watershedSegment`: Requires input segmentation. Applies a watershed transform to the image, nucleating from the seedMask.  
 
-The output (**`_segmentation.mat`**) includes `CellObject`: a binary mask array the same size as the input image.
+The output ('**`_segmentation.mat`**') includes `CellObject`: a binary mask array the same size as the input image.
 
 ## Tracking
 
@@ -74,7 +74,7 @@ Subroutines:
 `iterate1DgaussianFixedCenter2`: finds PSF width by masking with Gaussians of different sizes  
 `LinkSpots4`: links spots into trajectories based on proximity  
 
-The output (**`_TRACKS.mat`**) includes the following:  
+The output ('**`_TRACKS.mat`**') includes the following:  
 `frame_average`: an average of the first few frames in the image sequence for reference.
 `SpotsCh1` and `SpotsCh2`: arrays of foci from one image sequence in the respective detector channels 1 and 2. Each row corresponds to an individual localisation. The columns contain the following information:  
 1.	X coordinate (pixels)
@@ -121,7 +121,7 @@ Outputs: an output file (`OUTPUT.mat`) containing the `trackArrayCh1` and `track
 
 `sampleTrackAnalyser` performs the analyser function in a loop over multiple image files in a nested folder structure, thereby aggregating results corresponding to multiple fields of view in the same dataset.
 
-The output (**`_output.mat`**) includes the arrays `TrackArrayCh1` and `TrackArrayCh2` collated from all image sequences in the two respective detector channels.  
+The output ('**`_output.mat`**') includes the arrays `TrackArrayCh1` and `TrackArrayCh2` collated from all image sequences in the two respective detector channels.  
 Each row contains the information for an individual sifted track. The columns contain the following information:  
 1.	Segment index
 2.	Initial brightness of track (ADU detector counts; when normalised by the characteristic molecular brightness, this is the value that gives the track's stoichiometry as published)
