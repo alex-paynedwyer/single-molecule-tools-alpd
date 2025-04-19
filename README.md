@@ -4,6 +4,16 @@ Forked from single-molecule-tools (authors Adam Wollman and Isabel Llorente-Garc
 
 Novel functionality here includes distribution-based estimates of periodic clustering in molecular assemblies, as well as handy scripts for visualising correlated properties of trajectories colocalised across two channels.
 
+## SlimVar: repository for ADEMScode v2.2
+
+This section introduces the image analysis code used to support SlimVar microscopy in the following publications:
+
+
+
+Modular in vivo assembly of Arabidopsis FCA oligomers into condensates competent for RNA 3’ processing
+GJ Jang, AL Payne-Dwyer, R Maple, Z Wu, F Liu, SG Lopez, Y Wang, X Fang, MC Leake and C Dean, EMBO J (2025) 44: 2056 - 2074
+https://doi.org/10.1038/s44318-025-00394-4
+
 ### Guide to setting up github source control in matlab
 
 https://blogs.mathworks.com/community/2014/10/20/matlab-and-git/
