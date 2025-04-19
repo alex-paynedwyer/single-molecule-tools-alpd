@@ -1,6 +1,6 @@
 # Single molecule tools ([Alex Payne-Dwyer](https://www.linkedin.com/in/alex-payne-dwyer-002311a8/), University of York, UK)
 
-This repository comprises a series of Matlab functions and scripts called **ADEMScode** for tracking and single-molecule quantification of particles in fluorescence images and image sequences, as well as deconvolution, segmentation and simulation. It is broadly useful for localisation microscopy, step-wise photobleaching including Slimfield and SlimVar (see below), SHRIMP, STORM, PALM, FRAP and epifluorescence microscopy data in 16-bit .tif, .czi and other BioFormat image stack types.  
+This repository comprises a series of Matlab functions and scripts called **ADEMScode** for tracking and single-molecule quantification of particles in fluorescence images and image sequences, as well as deconvolution, segmentation and simulation. It is broadly useful for localisation microscopy, step-wise photobleaching including Slimfield and SlimVar (see below), SHRIMP, STORM, PALM, FRAP and epifluorescence microscopy data. 
 
 The original version is forked here from [single-molecule-tools](https://awollman.github.io/single-molecule-tools/):  
 (authors Adam Wollman and Isabel Llorente-Garcia, c. 2018, coordinated by Mark Leake's research lab in the [Physics of Life group](https://www.york.ac.uk/physics-engineering-technology/research/physics-of-life/)).  
@@ -39,14 +39,19 @@ To get the code, do one of the following:
 - Put the folder in your Matlab path and unzip if necessary
 - Make sure all code is added to the Matlab path using ‘Set path’
 
-## Data structure
+## Data structure and format
 
-The input image sequence files must be organised in a nested folder hierarchy: `DATASET/DATE/SAMPLE/FIELD/IMAGES`
-i.e. in the format "\*/2YYY-MM-DD/sample\*/field\*/\*.tif".
+The standard file format for ADEMScode is 16-bit OME TIFF.  The code uses `bioformats` from the [Open Microscopy Environment](https://www.openmicroscopy.org/) under open licence.
+In principle, it is therefore also compatible with .czi and other image stack types listed in BioFormats. 
+
+The input image sequence files must be organised in a nested folder hierarchy: `DATASET/DATE/SAMPLE/FIELD/IMAGES`  
+i.e. in the format `"\*/2YYY-MM-DD/sample\*/field\*/\*.tif"`.
+
+`mergeFolders` is a macro for arranging folders into this structure, for example if alternating odd- and even- numbered acquisitions correspond to brightfield and then SlimVar sequences for each field of view.
 
 ## Segmentation
 
-Various functions for segmenting cells. All use connected areas to create masks for distinct objects.  The analysis code only 
+Various functions for segmenting cells. All use connected areas to create masks for distinct objects.
 
 `thresholdSegment`: Defines a pixel intensity threshold using various different methods, such as the Otsu threshold.  
 `edgeSegment`: Detects edges in the image and dilates to fill in regions in between.  
@@ -61,7 +66,7 @@ The tracking software consists of a series of functions for opening image sequen
 `tracker`: This is the main tracking program and is a function of `image_label`, . 
 [SpotsCh1, SpotsCh2, frame_average, p, meta_data, image_data, spotImages] = tracker(fileName,p)
 The inputs are the filename (or folder name for unstacked tifs), either without the file extension or if using the bioformats plugin with extension.
-Uses bioformats from the Open Microscopy Environment with associated open licence.
+
 
 Parameters and settings:  
 `p` is the parameter structure which is read in from the workspace, or otherwise set in code:
