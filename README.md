@@ -28,6 +28,82 @@ Also available via [open access preprint](https://arxiv.org/pdf/2108.13743)
 
 Novel functionality here includes distribution-based estimates of periodic clustering in molecular assemblies, as well as scripts for visualising correlated properties of trajectories colocalised across two channels.  
 
-### Guide to setting up github source control in matlab
+## Set-up
 
-Here is a useful [MathWorks protocol](https://blogs.mathworks.com/community/2014/10/20/matlab-and-git/) to contribute to or update this repository directly from Matlab.
+To get the code, do one of the following: 
+1. set up source control in Matlab with this [MathWorks protocol](https://blogs.mathworks.com/community/2014/10/20/matlab-and-git/)
+2. use git to clone the repository, or
+3. download directly:
+- Click ‘View on Github’ at the top
+- Click the green ‘Clone or download’ button and download the whole repository
+- Put the folder in your Matlab path and unzip if necessary
+- Make sure all code is added to the Matlab path using ‘Set path’
+
+## Segmentation
+
+Various functions for segmenting cells. All use connected areas to create distinct objects
+
+# thresholdSegment
+
+Defines a pixel threshold using various different methods.
+
+# edgeSegment
+
+Detects edges in the image and dilates to fill in regions in between
+
+# watershedSegment
+
+Requires input segmentation. Applies a watershed transform to the image, nucleating from the seedMask.
+
+
+## Tracking
+# Description
+
+The tracking software consists of a series of functions for opening image files and tracking particles.
+The filename (or folder name for unstacked tiffs), either without the file extension or if using the bioformats plugin with extention.
+
+The output (TRACKS.mat) includes the arrays SpotsCh1 and SpotsCh2 for up to two detector channels. 
+Each row contains the information for an individual foci from one image sequence. The columns contain the following information:
+1.	X coordinate (pixels)
+2.	Y coordinate (pixels)
+3.	Clipping_flag (not used)
+4.	Mean local background pixel intensity (ADUs)
+5.	Total spot intensity, background corrected (this is the value in ADU detector counts used to calculate the track stoichiometry)
+6.	X spot sigma width (pixels)
+7.	Y spot sigma width (pixels)
+8.	Peak intensity in a fitted Gaussian (ADUs)
+9.	Frame number this foci was found in
+10.	Trajectory number, foci in the same trajectory have the same trajectory number
+11.	Signal to noise ratio
+12.	Frame in which laser exposure began
+
+Useful to know: There is a ‘show_output’ option that can be used to view graphs and manually advance at each stage of the algorithm.
+Cursor_mode: set =1 and user can manually specify where spots are. The code will return intensity values at this point over the whole time series.
+tracker: This is the main tracking program and is a function of image_label, readData=1 to extract tif or 0 if data preloaded then runs on image_label, p is the parameter structure which can be read in or set by the code. It returns spot arrays for each channel and frame_average. It uses:
+extractImageSequence3: extracts user set frames from tif specified by image_label, can open Andor ASCII files and folders full of tif frames
+ImEx1: uses bftools to open many life science image formats. See Open Microscopy Environment for details.
+LaserOn3: Calculates where the first illuminated frame is based on maximum intensity
+FrameAverage2: Calculates a frame average/summation over set no. frames
+findSpots2: thresholds the image with Otsu’s method to find candidate spots
+findSpots3: thresholds the image with Otsu’s method to find candidate spots
+findSpots4: performs findSpots2+3 in a more efficient way
+findSpotCentre3: performs iterative Gaussian masking to find spot centre and total intensity
+fit2DgaussianFixedCenter2: fits a constrained 2D Gaussian to find sigma_x/y and central intensity
+MergeCoincidentCandidates2: will use pairwise distances to remove candidates which are too close to be resolved, in some circumstances faster by quite a slow function in itself
+iterate1DgaussianFixedCenter2: finds PSF width by masking with Gaussians of different sizes
+LinkSpots4: links spots into trajectories based on proximity
+
+## Analysis
+
+Inputs tracking data (TRACKS.mat) and saves outputs (OUTPUT.mat).
+Summarises stoichiometry and diffusion coefficients and tests for pairwise colocalisation between tracks.
+
+`trackAnalyser` - runs on a single cell containing one colour channel
+Inputs: spot array, segmentation mask for one cell, image file name, cell number and a parameter structure
+Outputs: trackArray containing stoichiometry, diffusion coefficient etc. and the corresponding spots
+
+`colocalisedTrackAnalyser` - runs on a single cell containing 2 colour channels
+Inputs: spot arrays, segmentation mask for one cell, image file name, cell number and a parameter structure
+Outputs: trackArrays containing stoichiometry, diffusion coefficient etc. and the corresponding spots
+
+`sampleTrackAnalyser` , `sample2CTrackAnalyser` and `sampleMCTrackAnalyser` show you how to loop the previous functions over whole data sets and then plot things with `masterPlot`in single, multi channel and multi compartment data.
