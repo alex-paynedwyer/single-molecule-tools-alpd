@@ -1,12 +1,13 @@
-# Single molecule tools (Alex Payne-Dwyer)
-
-Forked from [single-molecule-tools](https://awollman.github.io/single-molecule-tools/) (authors Adam Wollman and Isabel Llorente-Garcia, c. 2018).
+# Single molecule tools ([Alex Payne-Dwyer](https://www.linkedin.com/in/alex-payne-dwyer-002311a8/), University of York, UK)
 
 This repository comprises a series of Matlab functions and scripts called **ADEMScode** for tracking and quantification of spots in images, deconvolution, segmentation and simulation. It is also capable of estimating single molecule concentrations from volumetric models and 2D images. It is broadly useful for localisation microscopy, step-wise photobleaching, STORM, PALM, FRAP and regular fluorescence microscopy data in 16-bit .tif, .czi and other BioFormat image stack types.  
 
+The original version is forked here from [single-molecule-tools](https://awollman.github.io/single-molecule-tools/):  
+(authors Adam Wollman and Isabel Llorente-Garcia, c. 2018, coordinated by Mark Leake's research lab in the [Physics of Life group](https://www.york.ac.uk/physics-engineering-technology/research/physics-of-life/)).  
+
 ## SlimVar: repository for ADEMScode v2.2
 
-This section introduces the version of ADEMScode software used to support SlimVar microscopy analysis in the following publications:
+This section introduces the version of ADEMScode software developed at the University of York, UK and used to support SlimVar microscopy analysis in the following publications:
 
 1. [SlimVar: rapid in vivo single-molecule tracking of chromatin regulators in plants](https://www.biorxiv.org/content/10.1101/2024.05.17.594710.abstract)  
 AL Payne-Dwyer, GJ Jang, C Dean and MC Leake  
