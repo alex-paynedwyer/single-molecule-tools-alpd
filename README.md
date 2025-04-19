@@ -64,17 +64,16 @@ The output ('**`_segmentation.mat`**') includes `CellObject`: a binary mask arra
 
 The tracking software consists of a series of functions for opening image sequences, tracking bright particles over time and quantifying their intensity.
 
-`tracker`: This is the main tracking program, whose inputs are the filename (or folder name for unstacked .tifs) and a list of hyperparameters '`p`'.    
-`\[SpotsCh1, SpotsCh2, frame_average, p, meta_data, image_data, spotImages\] = tracker(fileName,p)`
+`tracker`: the main tracking program, whose inputs are the filename (or folder name for unstacked .tifs) and a list of hyperparameters '`p`'.    
+`[SpotsCh1, SpotsCh2, frame_average, p, meta_data, image_data, spotImages] = tracker(fileName,p)`
 
-
-Parameters and settings:  
+### Parameters and settings
 `p` is the parameter structure which is read in from the workspace, or otherwise set in code:
 `readData` set to `0` for data preloaded as `image_label`, or `1` to specify .tif using a prompt.
 `show_output`: an option that can be used to view graphs and manually advance at each stage of the algorithm.  
 `Cursor_mode`: set to `1` for the user to manually specify localised foci. The code will return intensity values at this point over the whole time series.  
 
-Subroutines:  
+### Subroutines
 `extractImageSequence3`: extracts user set frames from .tif specified by image_label.  It can also open ASCII files and folders full of .tif frames.  
 `ImEx1`: uses bftools to open many life science image formats. See Open Microscopy Environment for details.  
 `LaserOn3`: calculates the first illuminated frame based on the maximum total intensity; for use when the excitation is not triggered by the camera.  
@@ -86,6 +85,7 @@ Subroutines:
 `iterate1DgaussianFixedCenter2`: finds PSF width by masking with Gaussians of different sizes  
 `LinkSpots4`: links spots into tracks based on proximity.  
 
+### Output
 The output ('**`_TRACKS.mat`**') includes the following:  
 `frame_average`: an average of the first few frames in the image sequence for reference.
 `SpotsCh1` and `SpotsCh2`: arrays of foci from one image sequence in the respective detector channels 1 and 2. Each row corresponds to an individual localisation. The columns contain the following information:  
@@ -101,8 +101,6 @@ The output ('**`_TRACKS.mat`**') includes the following:
 10.	Track number, foci in the same track have the same track number
 11.	Signal to noise ratio (this is used later for the **sifting** step)
 12.	Frame in which laser exposure began.
-
-
 
 # Characteristic molecular brightness
 
@@ -127,11 +125,18 @@ Broadly, three methods are available to do this, listed in order of increasing a
 This step applies sifting (and if specified, segmentation masks) to the foci then constructs the sifted tracks. 
 It summarises the track properties including stoichiometry and diffusivity, and tests for pairwise colocalisation between tracks.  
 
+### Parameters and settings
+`params` is the parameter structure which is read in from the workspace, or otherwise set in code:
+
+### Routines
+
 `colocalisedTrackAnalyser` is a function that runs on a single file containing two colour channels.
 Inputs: tracking file (`TRACKS.mat`) containing the `SpotCh1` and `SpotCh2` arrays; optional segmentation mask '`_segmentation.mat`'; image filename and a hyperparameter structure `params`.  
 Outputs: an output file (`OUTPUT.mat`) containing the `trackArrayCh1` and `trackArrayCh2` arrays that describe stoichiometry, diffusivity and other properties by track.
 
 `sampleTrackAnalyser` performs the analyser function in a loop over multiple image files in a nested folder structure, thereby aggregating results corresponding to multiple fields of view in the same dataset.
+
+### Output
 
 The output ('**`_output.mat`**') includes the arrays `TrackArrayCh1` and `TrackArrayCh2` collated from all image sequences in the two respective detector channels.  
 Each row contains the information for an individual sifted track. The columns contain the following information:  
