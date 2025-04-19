@@ -41,7 +41,8 @@ To get the code, do one of the following:
 
 ## Data structure
 
-The image sequence files must be organised in a nested folder hierarchy: DATASET/DATE/SAMPLE/FIELD/IMAGES, i.e. in the format "\*/2YYY-MM-DD/sample\*/field\*/\*.tif"
+The input image sequence files must be organised in a nested folder hierarchy: DATASET/DATE/SAMPLE/FIELD/IMAGES  
+i.e. in the format "\*/2YYY-MM-DD/sample\*/field\*/\*.tif"
 
 ## Segmentation
 
