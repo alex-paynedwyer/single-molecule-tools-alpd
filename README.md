@@ -64,8 +64,9 @@ The filename (or folder name for unstacked tifs), either without the file extens
 >8.	Peak intensity in a fitted Gaussian (ADUs)
 >9.	Frame number this foci was found in
 >10.	track number, foci in the same track have the same track number
->11.	Signal to noise ratio
+>11.	Signal to noise ratio (this is used later for the **sifting** step)
 >12.	Frame in which laser exposure began  
+
 
 Useful to know: There is a `show_output` option that can be used to view graphs and manually advance at each stage of the algorithm.  
 `Cursor_mode`: set =1 and user can manually specify where spots are. The code will return intensity values at this point over the whole time series.  
@@ -88,18 +89,14 @@ Useful to know: There is a `show_output` option that can be used to view graphs 
 Inputs tracking data (`TRACKS.mat`) and saves outputs (`OUTPUT.mat`).  
 Summarises stoichiometry and diffusivitys and tests for pairwise colocalisation between tracks.  
 
-`trackAnalyser` - runs on a single cell containing one colour channel
-Inputs: spot array, segmentation mask for one cell, image file name, cell number and a parameter structure.  
-Outputs: trackArray containing stoichiometry, diffusivity etc. and the corresponding spots.  
+`colocalisedTrackAnalyser` is a function that runs on a single file containing two colour channels.
+Inputs: spot arrays, segmentation mask for one segment, image filename, segment number and a hyperparameter structure `params`.  
+Outputs: track arrays containing stoichiometry, diffusivity etc. and the corresponding foci.  
 
-`colocalisedTrackAnalyser` - runs on a single cell containing 2 colour channels
-Inputs: spot arrays, segmentation mask for one cell, image file name, cell number and a parameter structure.  
-Outputs: trackArrays containing stoichiometry, diffusivity etc. and the corresponding spots.  
-
-`sampleTrackAnalyser` , `sample2CTrackAnalyser` and `sampleMCTrackAnalyser` show you how to loop the previous functions over whole data sets and then plot things with `masterPlot`in single, multi channel and multi compartment data.
+`sampleTrackAnalyser` performs the analyser function in a loop over multiple image files in a nested folder structure, thereby aggregating results corresponding to multiple fields of view in the same dataset.
 
 >The output (`output.mat`) includes the arrays `TrackArrayCh1` and `TrackArrayCh2` for up to two detector channels.  
->Each row contains the information for an individual foci from one image sequence. The columns contain the following information:  
+>Each row contains the information for an individual sifted track from one image sequence. The columns contain the following information:  
 >1.	Segment index
 >2.	Initial brightness of track (ADU detector counts; when normalised by the characteristic molecular brightness, this is the value that gives the track's stoichiometry as published)
 >3.	Diffusivity (µm²/s; this is the track's diffusivity as published)
@@ -113,8 +110,15 @@ Outputs: trackArrays containing stoichiometry, diffusivity etc. and the correspo
 >11. Mean distance between tracks (pixels)
 >12. Track diameter parallel to segment long axis (pixels)
 >13. Track diameter perpendicular to segment long axis (pixels)
->14. Length of track (frames)
+>14. Length of track (in frames; post sifting so all tracks have 3+ frames)
 
+It also appends the following rows to the Spot arrays
+>13.	Index of linked foci
+>14.	Overlap integral (used to estimate colocalisation)
+>15.	Track index of linked foci
+>16.	Distance to linked foci (pixels)
+>17.	Field of view index
+>18.  Segment index
 
 ## Analysis for Stoichiometry Periodicity
 
