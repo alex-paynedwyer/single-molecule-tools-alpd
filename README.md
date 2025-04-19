@@ -39,6 +39,10 @@ To get the code, do one of the following:
 - Put the folder in your Matlab path and unzip if necessary
 - Make sure all code is added to the Matlab path using ‘Set path’
 
+## Data structure
+
+The image sequence files must be organised in a nested folder hierarchy: DATASET/DATE/SAMPLE/FIELD/IMAGES, i.e. in the format "\*/2YYY-MM-DD/sample\*/field\*/\*.tif"
+
 ## Segmentation
 
 Various functions for segmenting cells. All use connected areas to create masks for distinct objects.  The analysis code only 
@@ -51,22 +55,26 @@ The output ('**`_segmentation.mat`**') includes `CellObject`: a binary mask arra
 
 ## Tracking
 
-The tracking software consists of a series of functions for opening image files and tracking particles.  
+The tracking software consists of a series of functions for opening image sequences, tracking bright particles over time and quantifying their intensity.
+
+`tracker`: This is the main tracking program and is a function of `image_label`, . 
+[SpotsCh1, SpotsCh2, frame_average, p, meta_data, image_data, spotImages] = tracker(fileName,p)
 The inputs are the filename (or folder name for unstacked tifs), either without the file extension or if using the bioformats plugin with extension.
+Uses bioformats from the Open Microscopy Environment with associated open licence.
 
 Parameters and settings:  
-`tracker`: This is the main tracking program and is a function of `image_label`, `readData=1` to extract tif or `readData=0` if data preloaded then runs on `image_label`. 
-`p` is the parameter structure which can be read in or set by the code. It returns arrays of foci for each channel as well as . It uses:  
+`p` is the parameter structure which is read in from the workspace, or otherwise set in code:
+`readData` set to `0` for data preloaded as `image_label`, or `1` to specify .tif using a prompt.
 `show_output`: an option that can be used to view graphs and manually advance at each stage of the algorithm.  
-`Cursor_mode`: set =1 and user can manually specify where spots are. The code will return intensity values at this point over the whole time series.  
+`Cursor_mode`: set to `1` for the user to manually specify localised foci. The code will return intensity values at this point over the whole time series.  
 
 Subroutines:
-`extractImageSequence3`: extracts user set frames from .tif specified by image_label, can open ASCII files and folders full of .tif frames  
+`extractImageSequence3`: extracts user set frames from .tif specified by image_label.  It can also open ASCII files and folders full of .tif frames.
 `ImEx1`: uses bftools to open many life science image formats. See Open Microscopy Environment for details.  
-`LaserOn3`: Calculates where the first illuminated frame is based on maximum intensity  
-`FrameAverage2`: Calculates a frame average/summation over set no. frames  
-`findSpots2`: thresholds the image with Otsu’s method to find candidate spots  
-`findSpots3`: thresholds the image with Otsu’s method to find candidate spots  
+`LaserOn3`: calculates the first illuminated frame based on the maximum total intensity; for use when the excitation is not triggered by the camera.
+`FrameAverage2`: calculates an image averaged over a set number of frames. 
+`findSpots2`: thresholds the image with Otsu's method to find candidate spots.
+`findSpots3`: thresholds the image with Otsu's method to find candidate spots.  
 `findSpots4`: performs both of the above efficiently  
 `findSpotCentre3`: performs iterative Gaussian masking to find spot centre and total intensity  
 `fit2DgaussianFixedCenter2`: fits a constrained 2D Gaussian to find `sigma_x`,`sigma_y` and central intensity  
