@@ -112,7 +112,7 @@ Outputs: track arrays containing stoichiometry, diffusivity etc. and the corresp
 >13. Track diameter perpendicular to segment long axis (pixels)
 >14. Length of track (in frames; post sifting so all tracks have 3+ frames)
 
-It also appends the following rows to the Spot arrays
+>It also appends the following rows to the Spot arrays for foci:
 >13.	Index of linked foci
 >14.	Overlap integral (used to estimate colocalisation)
 >15.	Track index of linked foci
