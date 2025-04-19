@@ -52,20 +52,20 @@ Various functions for segmenting cells. All use connected areas to create distin
 The tracking software consists of a series of functions for opening image files and tracking particles.  
 The filename (or folder name for unstacked tifs), either without the file extension or if using the bioformats plugin with extension.
 
->The output (TRACKS.mat) includes the arrays SpotsCh1 and SpotsCh2 for up to two detector channels.  
->Each row contains the information for an individual foci from one image sequence. The columns contain the following information:  
->1.	X coordinate (pixels)
->2.	Y coordinate (pixels)
->3.	Clipping_flag (not used)
->4.	Mean local background pixel intensity (ADUs)
->5.	Total spot intensity, background corrected (this is the value in ADU detector counts used to calculate the track stoichiometry)
->6.	X spot sigma width (pixels)
->7.	Y spot sigma width (pixels)
->8.	Peak intensity in a fitted Gaussian (ADUs)
->9.	Frame number this foci was found in
->10.	track number, foci in the same track have the same track number
->11.	Signal to noise ratio (this is used later for the **sifting** step)
->12.	Frame in which laser exposure began  
+The output (TRACKS.mat) includes the arrays SpotsCh1 and SpotsCh2 for up to two detector channels.  
+Each row contains the information for an individual foci from one image sequence. The columns contain the following information:  
+1.	X coordinate (pixels)
+2.	Y coordinate (pixels)
+3.	Clipping_flag (not used)
+4.	Mean local background pixel intensity (ADUs)
+5.	Total spot intensity, background corrected (this is the value in ADU detector counts used to calculate the track stoichiometry)
+6.	X spot sigma width (pixels)
+7.	Y spot sigma width (pixels)
+8.	Peak intensity in a fitted Gaussian (ADUs)
+9.	Frame number this foci was found in
+10.	track number, foci in the same track have the same track number
+11.	Signal to noise ratio (this is used later for the **sifting** step)
+12.	Frame in which laser exposure began  
 
 
 Useful to know: There is a `show_output` option that can be used to view graphs and manually advance at each stage of the algorithm.  
@@ -84,6 +84,24 @@ Useful to know: There is a `show_output` option that can be used to view graphs 
 `iterate1DgaussianFixedCenter2`: finds PSF width by masking with Gaussians of different sizes  
 `LinkSpots4`: links spots into trajectories based on proximity  
 
+# Characteristic molecular brightness
+
+To determine stoichiometry, periodicity or total molecule number, one must first estimate the typical intensity of a single fluorophore: the _characteristic molecular brightness_.
+Broadly, three methods are available to do this, listed in order of increasing accuracy for the specific use case:
+
+## In vitro
+1. Immobilise purified fluorophores to a surface, then track and find the average intensity of known single-molecule events (column 5 of SpotCh1/2 in ADU counts or photons).
+
+## In vivo
+2. Extensively photobleach a sample, then track and find the average intensity of assumed single-molecule events (column 5 of SpotCh1/2 in ADU counts or photons).
+3. Track (or overtrack) and apply the Chung-Kennedy filter, then calculate the photobleaching step heights (in ADU counts or photons).
+
+### Overtracking
+`overTracker.m`: overtracking is a method to see single photobleach steps by tracking them beyond the time at which they fall below the SNR threshold for sifting, typically due to complete photobleaching. Plotting the intensity distribution here again is useful as you should have one clear peak at the characteristic molecular brightness and one close to the detector baseline.
+
+### Filtering
+`CKall`: the intensity of foci are typically too noisy to extract steps using direct averages, so edge-preserving filters are needed to smooth the traces. This script will run a Chung-Kennedy filter over the data and plot the individual photobleaching traces.  Aligning the plateaus and plotting the filtered intensity yields the distribution of photobleaching step heights. The modal value is the characteristic molecular brightness.
+
 ## Analysis for Stoichiometry, Diffusivity and Colocalisation
 
 Inputs tracking data (`TRACKS.mat`) and saves outputs (`OUTPUT.mat`).  
@@ -95,30 +113,33 @@ Outputs: track arrays containing stoichiometry, diffusivity etc. and the corresp
 
 `sampleTrackAnalyser` performs the analyser function in a loop over multiple image files in a nested folder structure, thereby aggregating results corresponding to multiple fields of view in the same dataset.
 
->The output (`output.mat`) includes the arrays `TrackArrayCh1` and `TrackArrayCh2` for up to two detector channels.  
->Each row contains the information for an individual sifted track from one image sequence. The columns contain the following information:  
->1.	Segment index
->2.	Initial brightness of track (ADU detector counts; when normalised by the characteristic molecular brightness, this is the value that gives the track's stoichiometry as published)
->3.	Diffusivity (µm²/s; this is the track's diffusivity as published)
->4.	Diffusivity from first displacement (µm²/s)
->5.	Mean spot radius (pixels)
->6.	Track index within this channel
->7.	Filename ID
->8.	Index of the longest colocalised track in the other channel
->9.	Number of linked frames in this track
->10. Index of the colocalised track in the other channel
->11. Mean distance between tracks (pixels)
->12. Track diameter parallel to segment long axis (pixels)
->13. Track diameter perpendicular to segment long axis (pixels)
->14. Length of track (in frames; post sifting so all tracks have 3+ frames)
+The output (`output.mat`) includes the arrays `TrackArrayCh1` and `TrackArrayCh2` for up to two detector channels.  
+Each row contains the information for an individual sifted track from one image sequence. The columns contain the following information:  
+1.	Segment index
+2.	Initial brightness of track (ADU detector counts; when normalised by the characteristic molecular brightness, this is the value that gives the track's stoichiometry as published)
+3.	Diffusivity (µm²/s; this is the track's diffusivity as published)
+4.	Diffusivity from first displacement (µm²/s)
+5.	Mean spot radius (pixels)
+6.	Track index within this channel
+7.	Filename ID
+8.	Index of the longest colocalised track in the other channel
+9.	Number of linked frames in this track
+10. Index of the colocalised track in the other channel
+11. Mean distance between tracks (pixels)
+12. Track diameter parallel to segment long axis (pixels)
+13. Track diameter perpendicular to segment long axis (pixels)
+14. Length of track (in frames; post sifting so all tracks have 3+ frames)
 
->It also appends the following rows to the Spot arrays for foci:
->13.	Index of linked foci
->14.	Overlap integral (used to estimate colocalisation)
->15.	Track index of linked foci
->16.	Distance to linked foci (pixels)
->17.	Field of view index
->18.  Segment index
+This script also appends the following rows to the SpotCh1/2 arrays for foci:
+13.	Index of linked foci
+14.	Overlap integral (used to estimate colocalisation)
+15.	Track index of linked foci
+16.	Distance to linked foci (pixels)
+17.	Field of view index
+18.  Segment index
+
+
+
 
 ## Analysis for Stoichiometry Periodicity
 
