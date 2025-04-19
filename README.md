@@ -101,8 +101,8 @@ Outputs: trackArrays containing stoichiometry, diffusivity etc. and the correspo
 >The output (`output.mat`) includes the arrays `TrackArrayCh1` and `TrackArrayCh2` for up to two detector channels.  
 >Each row contains the information for an individual foci from one image sequence. The columns contain the following information:  
 >1.	Segment index
->2.	Initial brightness of track (ADU)
->3.	Diffusivity (µm²/s)
+>2.	Initial brightness of track (ADU detector counts; when normalised by the characteristic molecular brightness, this is the value that gives the track's stoichiometry as published)
+>3.	Diffusivity (µm²/s; this is the track's diffusivity as published)
 >4.	Diffusivity from first displacement (µm²/s)
 >5.	Mean spot radius (pixels)
 >6.	Track index within this channel
