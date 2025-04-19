@@ -102,8 +102,8 @@ Outputs: trackArrays containing stoichiometry, diffusivity etc. and the correspo
 >Each row contains the information for an individual foci from one image sequence. The columns contain the following information:  
 >1.	Segment index
 >2.	Initial brightness of track (ADU)
->3.	Diffusivity (µm^2/s)
->4.	Diffusivity from first displacement (µm^2/s)
+>3.	Diffusivity (µm²/s)
+>4.	Diffusivity from first displacement (µm²/s)
 >5.	Mean spot radius (pixels)
 >6.	Track index within this channel
 >7.	Filename ID
