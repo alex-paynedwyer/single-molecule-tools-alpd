@@ -1,6 +1,6 @@
 # Single molecule tools ([Alex Payne-Dwyer](https://www.linkedin.com/in/alex-payne-dwyer-002311a8/), University of York, UK)
 
-This repository comprises a series of Matlab functions and scripts called **ADEMScode** for tracking and single-molecule quantification of particles in fluorescence images and image sequences, as well as deconvolution, segmentation and simulation. It is broadly useful for localisation microscopy, step-wise photobleaching including Slimfield and SlimVar (see below), STORM, PALM, FRAP and epifluorescence microscopy data in 16-bit .tif, .czi and other BioFormat image stack types.  
+This repository comprises a series of Matlab functions and scripts called **ADEMScode** for tracking and single-molecule quantification of particles in fluorescence images and image sequences, as well as deconvolution, segmentation and simulation. It is broadly useful for localisation microscopy, step-wise photobleaching including Slimfield and SlimVar (see below), SHRIMP, STORM, PALM, FRAP and epifluorescence microscopy data in 16-bit .tif, .czi and other BioFormat image stack types.  
 
 The original version is forked here from [single-molecule-tools](https://awollman.github.io/single-molecule-tools/):  
 (authors Adam Wollman and Isabel Llorente-Garcia, c. 2018, coordinated by Mark Leake's research lab in the [Physics of Life group](https://www.york.ac.uk/physics-engineering-technology/research/physics-of-life/)).  
