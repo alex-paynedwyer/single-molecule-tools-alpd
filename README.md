@@ -16,7 +16,7 @@ bioRxiv, 2024.05.17.594710
 A Schulten, GJ Jang, A Payne-Dwyer, M Fiedler, ML Nielsen, M Bienz, MC Leake and C Dean
 bioRxiv, 2024.02. 15.580496
 
-3. [Modular in vivo assembly of Arabidopsis FCA oligomers into condensates competent for RNA 3’ processing)[https://doi.org/10.1038/s44318-025-00394-4)
+3. [Modular in vivo assembly of Arabidopsis FCA oligomers into condensates competent for RNA 3’ processing](https://doi.org/10.1038/s44318-025-00394-4)
 GJ Jang, AL Payne-Dwyer, R Maple, Z Wu, F Liu, SG Lopez, Y Wang, X Fang, MC Leake and C Dean
 Now published in EMBO J (2025) 44: 2056 - 2074
 
