@@ -41,11 +41,11 @@ To get the code, do one of the following:
 
 ## Segmentation
 
-Various functions for segmenting cells. All use connected areas to create distinct objects.
+Various functions for segmenting cells. All use connected areas to create masks for distinct objects.  The analysis code only 
 
-`thresholdSegment`: Defines a pixel threshold using various different methods.  
+`thresholdSegment`: Defines a pixel intensity threshold using various different methods, such as the Otsu threshold.  
 `edgeSegment`: Detects edges in the image and dilates to fill in regions in between.  
-`watershedSegment`: Requires input segmentation. Applies a watershed transform to the image, nucleating from the seedMask.  
+`watershedSegment`: Requires input segmentation `seedMask` from which a watershed transform is nucleated and applied to the image.  
 
 The output ('**`_segmentation.mat`**') includes `CellObject`: a binary mask array the same size as the input image.
 
@@ -112,11 +112,11 @@ Broadly, three methods are available to do this, listed in order of increasing a
 
 ## Analysis for Stoichiometry, Diffusivity and Colocalisation
 
-Inputs  and   
-Summarises stoichiometry and diffusivitys and tests for pairwise colocalisation between tracks.  
+This step applies sifting (and if specified, segmentation masks) to the foci then constructs the sifted tracks. 
+It summarises the track properties including stoichiometry and diffusivity, and tests for pairwise colocalisation between tracks.  
 
 `colocalisedTrackAnalyser` is a function that runs on a single file containing two colour channels.
-Inputs: tracking file (`TRACKS.mat`) containing the `SpotCh1` and `SpotCh2` arrays, segmentation mask for one segment, image filename, segment number and a hyperparameter structure `params`.  
+Inputs: tracking file (`TRACKS.mat`) containing the `SpotCh1` and `SpotCh2` arrays; optional segmentation mask '`_segmentation.mat`'; image filename and a hyperparameter structure `params`.  
 Outputs: an output file (`OUTPUT.mat`) containing the `trackArrayCh1` and `trackArrayCh2` arrays that describe stoichiometry, diffusivity and other properties by track.
 
 `sampleTrackAnalyser` performs the analyser function in a loop over multiple image files in a nested folder structure, thereby aggregating results corresponding to multiple fields of view in the same dataset.
@@ -139,10 +139,10 @@ Each row contains the information for an individual sifted track. The columns co
 14. Length of track (in frames; post sifting so all tracks have 3+ frames)
 
 This script also appends the following rows to the SpotCh1/2 arrays for the sifted foci:
-13.	Index of linked foci
-14.	Overlap integral (used to estimate colocalisation)
-15.	Track index of linked foci
-16.	Distance to linked foci (pixels)
+13.	Index of colocalised foci in the other channel
+14.	Overlap integral (a metric to estimate extent of colocalisation)
+15.	Track index of colocalised foci in the other channel
+16.	Distance between colocalised foci (pixels)
 17.	Field of view index
 18.  Segment index
 
