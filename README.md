@@ -5,7 +5,7 @@ This repository comprises a series of Matlab functions and scripts called **ADEM
 The original version is forked here from [single-molecule-tools](https://awollman.github.io/single-molecule-tools/):  
 (authors Adam Wollman and Isabel Llorente-Garcia, c. 2018, coordinated by Mark Leake's research lab in the [Physics of Life group](https://www.york.ac.uk/physics-engineering-technology/research/physics-of-life/)).  
 
-## SlimVar: repository for ADEMScode v2.2
+# SlimVar: repository for ADEMScode v2.2
 
 This section introduces the version of ADEMScode software developed at the University of York, UK and used to support SlimVar microscopy analysis in the following publications:
 
@@ -102,22 +102,22 @@ The output ('**`_TRACKS.mat`**') includes the following:
 11.	Signal to noise ratio (this is used later for the **sifting** step)
 12.	Frame in which laser exposure began.
 
-# Characteristic molecular brightness
+## Characteristic molecular brightness
 
 To determine stoichiometry, periodicity or total molecule number, one must first estimate the typical intensity of a single fluorophore: the _characteristic molecular brightness_.
 Broadly, three methods are available to do this, listed in order of increasing accuracy for the specific use case:
 
-## In vitro
+### In vitro
 1. Immobilise purified fluorophores to a surface, then track and find the average intensity of known single-molecule events (column 5 of SpotCh1/2 in ADU counts or photons).
 
-## In vivo
+### In vivo
 2. Extensively photobleach a sample, then track and find the average intensity of assumed single-molecule events (column 5 of SpotCh1/2 in ADU counts or photons).
 3. Track (or overtrack) and apply the Chung-Kennedy filter, then calculate the photobleaching step heights (in ADU counts or photons).
 
-### Overtracking
+#### Overtracking
 `overTracker.m`: overtracking is a method to see single photobleach steps by tracking them beyond the time at which they fall below the SNR threshold for sifting, typically due to complete photobleaching. Plotting the intensity distribution here again is useful as you should have one clear peak at the characteristic molecular brightness and one close to the detector baseline.
 
-### Filtering
+#### Filtering
 `CKall`: the intensity of foci are typically too noisy to extract steps using direct averages, so edge-preserving filters are needed to smooth the traces. This script will run a Chung-Kennedy filter over the data and plot the individual photobleaching traces.  Aligning the plateaus and plotting the filtered intensity yields the distribution of photobleaching step heights. The modal value is the characteristic molecular brightness.
 
 ## Analysis for Stoichiometry, Diffusivity and Colocalisation
