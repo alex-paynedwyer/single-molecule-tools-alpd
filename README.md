@@ -111,17 +111,17 @@ To determine stoichiometry, periodicity or total molecule number, one must first
 Broadly, three methods are available to estimate this, listed in order of increasing accuracy for the specific use case:
 
 ### In vitro
-1. Immobilise purified fluorophores to a surface, then track and find the average intensity of known single-molecule events (column 5 of SpotCh1/2 in ADU counts or photons).  
+1. Immobilise purified fluorophores to a surface, then track and find the average intensity of known single-molecule events (column 5 of SpotCh1/2 in ADUs).  
 
 ### In vivo
-2. Extensively photobleach a sample, then track and find the average intensity of assumed single-molecule events (column 5 of SpotCh1/2 in ADU counts).  
-3. Track (or overtrack) and apply the Chung-Kennedy filter, then calculate the photobleaching step heights (in ADU counts or photons).  
+2. Extensively photobleach a sample, then track and find the average intensity of assumed single-molecule events (column 5 of SpotCh1/2 in ADUs).  
+3. Track (or overtrack) and apply the Chung-Kennedy filter, then calculate the photobleaching step heights (in ADUs).  
 
 ### Intensity distribution
 `charMolBrightness`: for methods 1 and 2, this script will take tracking data and plot the intensity of foci detected after at least one 1/e photobleaching decay time.  
 
 #### Overtracking
-`overTracker`: overtracking is a method to see single photobleach steps by tracking them beyond the time at which they fall below the SNR threshold for sifting, typically due to complete photobleaching. Plotting the intensity distribution here again is useful as you should have one clear peak at the characteristic molecular brightness and one close to the detector baseline.
+`overTracker`: overtracking is a method 3 to see single photobleach steps by tracking them beyond the time at which they fall below the SNR threshold for sifting, typically due to complete photobleaching. Plotting the intensity distribution here again is useful as you should have one clear peak at the characteristic molecular brightness and one close to the detector baseline.
 
 #### Filtering
 `CKall`: the intensity of foci are typically too noisy to extract steps using direct averages, so edge-preserving filters are needed to smooth the traces. This script will run a Chung-Kennedy filter over the data and plot the individual photobleaching traces.  Aligning the plateaus and plotting the filtered intensity yields the distribution of photobleaching step heights. The modal value is the characteristic molecular brightness.
