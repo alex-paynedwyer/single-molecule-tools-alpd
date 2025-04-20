@@ -106,7 +106,7 @@ The output ('**`_TRACKS.mat`**') includes the following:
 
 ## Characteristic molecular brightness
 
-To determine stoichiometry, periodicity or total molecule number, one must first estimate the typical intensity of a single fluorophore: the _characteristic molecular brightness_. Broadly, three methods are available to do this, listed in order of increasing accuracy for the specific use case:
+To determine stoichiometry, periodicity or total molecule number, one must first estimate the typical intensity of a single fluorophore: the _characteristic molecular brightness_, also referred to as '`Isingle`' in ADEMScode. Broadly, three methods are available to do this, listed in order of increasing accuracy for the specific use case:
 
 ### In vitro
 1. Immobilise purified fluorophores to a surface, then track and find the average intensity of known single-molecule events (column 5 of SpotCh1/2 in ADU counts or photons).  
@@ -129,9 +129,6 @@ To determine stoichiometry, periodicity or total molecule number, one must first
 This step applies sifting (and if specified, segmentation masks) to the foci then constructs the sifted tracks. 
 It summarises the track properties including stoichiometry and diffusivity, and tests for pairwise colocalisation between tracks.  
 
-### Parameters and settings
-`params` is the parameter structure which is read in from the workspace, or otherwise set in code (see code comments for details).
-
 ### Routines
 
 `colocalisedTrackAnalyser` is a function that runs on a single file containing two colour channels.
@@ -139,6 +136,10 @@ Inputs: tracking file (`TRACKS.mat`) containing the `SpotCh1` and `SpotCh2` arra
 Outputs: an output file (`OUTPUT.mat`) containing the `trackArrayCh1` and `trackArrayCh2` arrays that describe stoichiometry, diffusivity and other properties by track.
 
 `sampleTrackAnalyser` performs the analyser function in a loop over multiple image files in a nested folder structure, thereby aggregating results corresponding to multiple fields of view in the same dataset.
+It uses same the list of hyperparameters '`params`' across the batch.    
+
+### Parameters and settings
+`params` is the parameter structure which is read in from the workspace, or otherwise set in code (see code comments for details).
 
 ### Output
 
