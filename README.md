@@ -106,7 +106,7 @@ The output ('**`_TRACKS.mat`**') includes the following:
 
 ## Characteristic molecular brightness
 
-To determine stoichiometry, periodicity or total molecule number, one must first estimate the typical intensity of a single fluorophore: the _characteristic molecular brightness_, also referred to in ADEMScode as '`Isingle`' (in ADU counts rather than photons). For publication, I recommend reporting the characteristic molecular brightness as a number of photons per localisation (using the detector's gain factor in photoelectrons/ADU).  Within ADEMScode, only the value in ADU detector counts is needed.  
+To determine stoichiometry, periodicity or total molecule number, one must first estimate the typical intensity of a single fluorophore: the _characteristic molecular brightness_. For publication, I recommend reporting this as a number of photons per localisation (using the detector's gain factor in photoelectrons/ADU).  Within ADEMScode, only the value in ADU detector counts is needed, referred to as '`Isingle`'.  
 
 Broadly, three methods are available to estimate this, listed in order of increasing accuracy for the specific use case:
 
