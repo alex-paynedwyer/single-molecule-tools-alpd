@@ -70,7 +70,7 @@ The tracking software consists of a series of functions for opening image sequen
 `[SpotsCh1, SpotsCh2, frame_average, p, meta_data, image_data, spotImages] = tracker(fileName,p)`  
 
 ### Parameters and settings
-`p` is the parameter structure which is read in from the workspace, or otherwise set in code:  
+`p` is the parameter structure which is read in from the workspace, or otherwise set in code (see code comments for details):  
 `readData` set to `0` for data preloaded as `image_label`, or `1` to specify .tif using a prompt.  
 `show_output`: an option that can be used to view graphs and manually advance at each stage of the algorithm.  
 `Cursor_mode`: set to `1` for the user to manually specify localised foci. The code will return intensity values at this point over the whole time series.  
@@ -106,8 +106,7 @@ The output ('**`_TRACKS.mat`**') includes the following:
 
 ## Characteristic molecular brightness
 
-To determine stoichiometry, periodicity or total molecule number, one must first estimate the typical intensity of a single fluorophore: the _characteristic molecular brightness_.  
-Broadly, three methods are available to do this, listed in order of increasing accuracy for the specific use case:
+To determine stoichiometry, periodicity or total molecule number, one must first estimate the typical intensity of a single fluorophore: the _characteristic molecular brightness_. Broadly, three methods are available to do this, listed in order of increasing accuracy for the specific use case:
 
 ### In vitro
 1. Immobilise purified fluorophores to a surface, then track and find the average intensity of known single-molecule events (column 5 of SpotCh1/2 in ADU counts or photons).  
@@ -131,7 +130,7 @@ This step applies sifting (and if specified, segmentation masks) to the foci the
 It summarises the track properties including stoichiometry and diffusivity, and tests for pairwise colocalisation between tracks.  
 
 ### Parameters and settings
-`params` is the parameter structure which is read in from the workspace, or otherwise set in code:
+`params` is the parameter structure which is read in from the workspace, or otherwise set in code (see code comments for details).
 
 ### Routines
 
