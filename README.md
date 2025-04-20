@@ -171,7 +171,10 @@ This script also appends the following rows to the SpotCh1/2 arrays for the sift
 17.	Field of view index  
 18. Segment index  
 
-I recommend using `BrunnerMunzelTest`: a two-tailed, nonparametric statistical test to distinguish samples of floating point values (e.g. diffusivity, stoichiometry of many tracks).
+Useful scripts:  
+
+`combineTrackingOutputs`: a script to aggregate multiple `output.mat` files, for example replicates in the same experiment.  
+`BrunnerMunzelTest`: a two-tailed, nonparametric statistical test to distinguish samples of floating point values (e.g. diffusivity, stoichiometry of many tracks).  
 
 ## Analysis for Stoichiometry Periodicity
 
