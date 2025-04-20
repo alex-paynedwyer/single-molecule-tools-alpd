@@ -106,7 +106,9 @@ The output ('**`_TRACKS.mat`**') includes the following:
 
 ## Characteristic molecular brightness
 
-To determine stoichiometry, periodicity or total molecule number, one must first estimate the typical intensity of a single fluorophore: the _characteristic molecular brightness_, also referred to in ADEMScode as '`Isingle`' (in ADU counts rather than photons). Broadly, three methods are available to estimate this, listed in order of increasing accuracy for the specific use case:
+To determine stoichiometry, periodicity or total molecule number, one must first estimate the typical intensity of a single fluorophore: the _characteristic molecular brightness_, also referred to in ADEMScode as '`Isingle`' (in ADU counts rather than photons). For publication, I recommend reporting the characteristic molecular brightness as a number of photons per localisation (using the detector's gain factor in photoelectrons/ADU).  Within ADEMScode, only the value in ADU detector counts is needed.  
+
+Broadly, three methods are available to estimate this, listed in order of increasing accuracy for the specific use case:
 
 ### In vitro
 1. Immobilise purified fluorophores to a surface, then track and find the average intensity of known single-molecule events (column 5 of SpotCh1/2 in ADU counts or photons).  
@@ -124,7 +126,6 @@ To determine stoichiometry, periodicity or total molecule number, one must first
 #### Filtering
 `CKall`: the intensity of foci are typically too noisy to extract steps using direct averages, so edge-preserving filters are needed to smooth the traces. This script will run a Chung-Kennedy filter over the data and plot the individual photobleaching traces.  Aligning the plateaus and plotting the filtered intensity yields the distribution of photobleaching step heights. The modal value is the characteristic molecular brightness.
 
-For publication, I recommend reporting the characteristic molecular brightness as a number of photons per localisation (using the detector's gain factor in photoelectrons/ADU).
 
 ## Analysis for Stoichiometry, Diffusivity and Colocalisation
 
