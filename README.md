@@ -163,13 +163,13 @@ Each row contains the information for an individual sifted track. The columns co
 13. Track diameter perpendicular to segment long axis (pixels)
 14. Length of track (in frames; post sifting so all tracks have 3+ frames)
 
-This script also appends the following rows to the SpotCh1/2 arrays for the sifted foci:
-13.	Index of colocalised foci in the other channel
-14.	Overlap integral (a metric to estimate extent of colocalisation)
-15.	Track index of colocalised foci in the other channel
-16.	Distance between colocalised foci (pixels)
-17.	Field of view index
-18.  Segment index
+This script also appends the following rows to the SpotCh1/2 arrays for the sifted foci:  
+13.	Index of colocalised foci in the other channel  
+14.	Overlap integral (a metric to estimate extent of colocalisation)  
+15.	Track index of colocalised foci in the other channel  
+16.	Distance between colocalised foci (pixels)  
+17.	Field of view index  
+18. Segment index  
 
 I recommend using `BrunnerMunzelTest`: a two-tailed, nonparametric statistical test to distinguish samples of floating point values (e.g. diffusivity, stoichiometry of many tracks).
 
