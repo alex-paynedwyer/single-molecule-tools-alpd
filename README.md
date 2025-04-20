@@ -94,11 +94,11 @@ The output ('**`_TRACKS.mat`**') includes the following:
 1.	X coordinate (pixels)
 2.	Y coordinate (pixels)
 3.	Clipping_flag (not used)
-4.	Mean local background pixel intensity (ADUs)
+4.	Mean local background pixel intensity (ADU counts)
 5.	Total spot intensity, background corrected (this is the value in ADU detector counts used to calculate the track stoichiometry)
 6.	X spot sigma width (pixels)
 7.	Y spot sigma width (pixels)
-8.	Peak intensity in a fitted Gaussian (ADUs)
+8.	Peak intensity in a fitted Gaussian (ADU counts)
 9.	Frame number this foci was found in
 10.	Track number, foci in the same track have the same track number
 11.	Signal to noise ratio (this is used later for the **sifting** step)
@@ -106,13 +106,13 @@ The output ('**`_TRACKS.mat`**') includes the following:
 
 ## Characteristic molecular brightness
 
-To determine stoichiometry, periodicity or total molecule number, one must first estimate the typical intensity of a single fluorophore: the _characteristic molecular brightness_, also referred to as '`Isingle`' in ADEMScode. Broadly, three methods are available to do this, listed in order of increasing accuracy for the specific use case:
+To determine stoichiometry, periodicity or total molecule number, one must first estimate the typical intensity of a single fluorophore: the _characteristic molecular brightness_, also referred to in ADEMScode as '`Isingle`' (in ADU counts rather than photons). Broadly, three methods are available to estimate this, listed in order of increasing accuracy for the specific use case:
 
 ### In vitro
 1. Immobilise purified fluorophores to a surface, then track and find the average intensity of known single-molecule events (column 5 of SpotCh1/2 in ADU counts or photons).  
 
 ### In vivo
-2. Extensively photobleach a sample, then track and find the average intensity of assumed single-molecule events (column 5 of SpotCh1/2 in ADU counts or photons).  
+2. Extensively photobleach a sample, then track and find the average intensity of assumed single-molecule events (column 5 of SpotCh1/2 in ADU counts).  
 3. Track (or overtrack) and apply the Chung-Kennedy filter, then calculate the photobleaching step heights (in ADU counts or photons).  
 
 ### Intensity distribution
@@ -123,6 +123,8 @@ To determine stoichiometry, periodicity or total molecule number, one must first
 
 #### Filtering
 `CKall`: the intensity of foci are typically too noisy to extract steps using direct averages, so edge-preserving filters are needed to smooth the traces. This script will run a Chung-Kennedy filter over the data and plot the individual photobleaching traces.  Aligning the plateaus and plotting the filtered intensity yields the distribution of photobleaching step heights. The modal value is the characteristic molecular brightness.
+
+For publication, I recommend reporting the characteristic molecular brightness as a number of photons per localisation (using the detector's gain factor in photoelectrons/ADU).
 
 ## Analysis for Stoichiometry, Diffusivity and Colocalisation
 
