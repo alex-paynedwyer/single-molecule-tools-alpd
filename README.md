@@ -29,7 +29,7 @@ AL Payne-Dwyer and MC Leake
 Methods in Molecular Biology (Volume 2476): Chromosome Architecture pp 311-328 (2022)  
 Also available via [open access preprint](https://arxiv.org/pdf/2108.13743)
 
-Novel functionality here includes distribution-based estimates of periodic clustering in molecular assemblies, as well as scripts for visualising correlated properties of tracks colocalised across two channels.  
+Novel functionality here includes saving of output files, distribution-based estimates of periodic clustering in molecular assemblies, as well as scripts for visualising correlated properties of tracks colocalised across two channels.  
 
 ## Set-up
 
