@@ -78,6 +78,7 @@ Each segmentation method creates masks for distinct objects which are used later
 The output ('**`_segmentation.mat`**') includes `CellObject`: a binary mask array the same size as the input image.  
 `mask2seg` can be used to generate `_segmentation.mat` format directly from 2D TIFFs, for example if segmentation was performed outside MATLAB.  
 
+`overlayAllSegments`: show the initial frame average with the segments overlaid.  Also fits and shows semicircular-capped rectangles (designed for use for cell segmentation of rod-shaped bacteria).
 
 ## Tracking
 
@@ -121,6 +122,8 @@ The output ('**`_TRACKS.mat`**') includes a copy of the input hyperparameters `p
 11.	Signal to noise ratio (this is used later for the **sifting** step)
 12.	Frame in which laser exposure began.
 
+`superResPlot`: uses the TRACKS.mat file to export as .csv a list of localisations that can be used in packages such as ThunderSTORM (Fiji) to generate super-resolution images.
+
 ## Characteristic molecular brightness
 
 To determine stoichiometry, periodicity or total molecule number, one must first estimate the typical intensity of a single fluorophore: the _characteristic molecular brightness_. For publication, I recommend reporting this as a number of photons per localisation (using the detector's gain factor in photoelectrons/ADU).  Within ADEMScode, only the value in ADU detector counts is needed, referred to as '`Isingle`'.  
@@ -157,9 +160,9 @@ The analysis step then tests for pairwise colocalisation between tracks, and sum
 
 ### Routines
 
-`colocalisedTrackAnalyser` is a function that runs on a single field of view containing two colour channels.  The main input is the tracking file (`TRACKS.mat`) containing the `SpotCh1` and `SpotCh2` arrays; it also requires the original image filename and a hyperparameter structure `params`.  Optionally, it can apply a segmentation mask '`_segmentation.mat`'.
+`analyseTracks` is a function that runs on a single field of view containing two colour channels.  The main input is the tracking file (`TRACKS.mat`) containing the `SpotCh1` and `SpotCh2` arrays; it also requires the original image filename and a hyperparameter structure `params`.  Optionally, it can apply a segmentation mask '`_segmentation.mat`'.
 
-`sampleTrackAnalyser` performs the same function in a loop over multiple image files in a nested folder structure, thereby aggregating results corresponding to multiple fields of view in the same dataset.
+`analyseAllTracks` performs the same function in a loop over multiple image files in a nested folder structure, thereby aggregating results corresponding to multiple fields of view in the same dataset.
 It uses same the list of hyperparameters '`params`' across the batch.    
 
 ### Parameters and settings
@@ -209,15 +212,15 @@ This version of ADEMScode includes several scripts to aid interrogation of the d
 The following scripts use a specific `output.mat` file as input to visualise the distribution of a particular metric for either colocalised, uncolocalised or total tracks in one of the channels.  
 Various options include:  scatterplots, histograms, kernel density estimates or violin/beeswarm-style plots with boxplot (based on Jonas Dorn's `distributionPlot`).  
 
-`plotTrackFrequency`: plots the observed number of tracks per segment.
-`plotStoichiometry`: plots the stoichiometry of tracks
-`plotDiffusivity`: plots the diffusivity of tracks
-`plotDwellTime`: plots the dwell time (duration over which tracks are colocalised)
-`
+`plotTrackFrequency`: plots the observed numbers of tracks per segment.
+`plotStoichiometry`: plots the stoichiometries of tracks in molecules.
+`plotDiffusivity`: plots the diffusivities of tracks in µm²/s.
+`plotDwellTime`: plots the dwell times (duration over which tracks are colocalised) in ms.
+`plotNearestNeighbourPeriodicity`: plots the periodicity, i.e. the distribution of peak-to-peak intervals in the stoichiometry, and returns the modal ± s.e.m. periodicity in molecules.  
+It is also used to simulate control data (use the flag `simulate=1`).
 
 The `cftool` fitting suite in MATLAB can also be used to fit models to the experimental data to discriminate heterogeneous states of assemblies, for example sums of Gaussian peaks for stoichiometry, or sums of Gamma distributions for the diffusivity. It generates handy `.sfit` files for later use e.g. with the plotting scripts above.
 
-### Periodicity
 
 
 
