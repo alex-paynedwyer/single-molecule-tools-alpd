@@ -2,7 +2,7 @@
 
 This repository comprises a series of Matlab functions and scripts called **ADEMScode** for tracking and single-molecule quantification of particles in fluorescence images and image sequences, as well as deconvolution, segmentation and simulation. It is broadly useful for localisation microscopy, step-wise photobleaching including Slimfield and SlimVar (see below), SHRIMP, STORM, PALM, FRAP and epifluorescence microscopy data. 
 
-The original version is forked here from [single-molecule-tools](https://awollman.github.io/single-molecule-tools/):  
+The original version (ADEMScode v2.1) is forked here from [single-molecule-tools](https://awollman.github.io/single-molecule-tools/):  
 (authors Adam Wollman and Isabel Llorente-Garcia, c. 2018, coordinated by Mark Leake's research lab in the [Physics of Life group](https://www.york.ac.uk/physics-engineering-technology/research/physics-of-life/)).  
 
 Please also see [PySTACHIO](https://github.com/ejh516/pystachio-smt); it is an open-source port of ADEMScode v2.1 written in Python 3, retaining much of its functionality, as described in [Shepherd et al. 2021](https://doi.org/10.1016/j.csbj.2021.07.004).
