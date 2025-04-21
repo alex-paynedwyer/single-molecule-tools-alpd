@@ -135,7 +135,7 @@ Broadly, three methods are available to estimate this, listed in order of increa
 3. Track (or overtrack) and apply the Chung-Kennedy filter, then calculate the photobleaching step heights (in ADUs).  
 
 #### Intensity distribution
-`charMolBrightness`: for methods 1 and 2, this script will take tracking data and plot the intensity of foci detected after at least one 1/e photobleaching decay time.  
+`fastCharMolBrightness`: for methods 1 and 2, this script will take tracking data and plot the intensity of foci detected after at least one 1/e photobleaching decay time.  
 Plotting the intensity distribution of foci is useful in cases of sufficiently low background; you should have one clear peak at the characteristic molecular brightness and one close to the detector baseline.
 
 #### Overtracking and filtering
@@ -144,7 +144,7 @@ Plotting the intensity distribution of foci is useful in cases of sufficiently l
 
 `overTrackAll`: a script to overtrack multiple fields of view in a batch, producing multiple `_BASELINE.mat` files.  
 
-`CKall`: the intensity of foci are typically too noisy to extract steps using direct averages, so edge-preserving filters are needed to smooth the traces. This script will run a Chung-Kennedy filter over the data and plot the individual photobleaching traces.  Aligning the plateaus and plotting the filtered intensity yields the distribution of photobleaching step heights. The modal value is the characteristic molecular brightness.  
+`CKfilterBaseline`: the intensity of foci are typically too noisy to extract steps using direct averages, so edge-preserving filters are needed to smooth the traces. This script will run a Chung-Kennedy filter over one field of view (one 'BASELINE.mat' file) and plot the individual photobleaching traces.  Aligning the plateaus and plotting the filtered intensity yields the distribution of photobleaching step heights. The modal value is the characteristic molecular brightness.  
 
 `plotOverTracks`: a script to visualise selected traces of foci intensity over time, using either tracking data (`_TRACKS.mat`) or preferably, overtracking data from a `_BASELINE.mat` file.
 
