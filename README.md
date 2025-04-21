@@ -10,7 +10,7 @@ Please also see [PySTACHIO](https://github.com/ejh516/pystachio-smt); it is an o
 
 # SlimVar: repository for ADEMScode v2.2
 
-This section introduces the version of ADEMScode software developed at the University of York, UK and used to support SlimVar microscopy analysis in the following publications:
+This section introduces the ADEMScode version 2.2 software developed by Alex Payne-Dwyer at the University of York, UK and used to support SlimVar microscopy analysis in the following publications:
 
 1. [SlimVar: rapid in vivo single-molecule tracking of chromatin regulators in plants](https://www.biorxiv.org/content/10.1101/2024.05.17.594710.abstract)  
 AL Payne-Dwyer, GJ Jang, C Dean and MC Leake  
