@@ -132,7 +132,7 @@ Plotting the intensity distribution of foci is useful in cases of sufficiently l
 
 `overTrackAll`: a script to overtrack multiple fields of view in a batch.  
 
-`plotOvertracks`: a script to visualise selected traces from the overtracked data.
+`plotOverTracks`: a script to visualise selected traces from the overtracked data.
 
 ## Analysis for Stoichiometry, Diffusivity, Periodicity and Colocalisation
 
