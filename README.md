@@ -128,7 +128,7 @@ Plotting the intensity distribution of foci is useful in cases of sufficiently l
 
 `overTrackAll`: a script to overtrack multiple fields of view in a batch.  
 
-## Analysis for Stoichiometry, Diffusivity and Colocalisation
+## Analysis for Stoichiometry, Diffusivity, Periodicity and Colocalisation
 
 This step applies *sifting* (and if specified, segmentation masks) to the foci, then constructs the sifted tracks.  
 It summarises the track properties including stoichiometry and diffusivity, and tests for pairwise colocalisation between tracks.  
@@ -184,19 +184,21 @@ This version of ADEMScode includes several scripts to aid interrogation of the d
 `combineTrackingOutputs`: a script to aggregate multiple `output.mat` files, for example replicates of the same experiment tracked separately.  It stores the respective hyperparameter sets as `paramsA` and `paramsB`.
 `BrunnerMunzelTest`: a two-tailed, non-parametric statistical test to distinguish lists of floating point values (e.g. diffusivity, stoichiometry of many tracks).  
 
-The following scripts use a specific `output.mat` file as input to visualise the distribution of a particular metric for either colocalised, uncolocalised or total tracks in one of the channels. 
-Various options include scatterplots, histograms, violin/beeswarm-style plots with boxplot, or kernel density estimates.  The `cftool` fitting suite in MATLAB (generates handy `.sfit` files) can also be used to fit models to the experimental data to discriminate heterogeneous states of assemblies, for example sums of Gaussian peaks for stoichiometry, or sums of Gamma distributions for the diffusivity.
+The following scripts use a specific `output.mat` file as input to visualise the distribution of a particular metric for either colocalised, uncolocalised or total tracks in one of the channels.  
+Various options include:  scatterplots, histograms, violin/beeswarm-style plots with boxplot, or kernel density estimates.  
 
 `plotTrackFrequency`: plots the observed number of tracks per segment.
 `plotStoichiometry`: plots the stoichiometry of tracks
 `plotDiffusivity`: plots the diffusivity of tracks
 
-## Analysis for Stoichiometry Periodicity
+The `cftool` fitting suite in MATLAB can also be used to fit models to the experimental data to discriminate heterogeneous states of assemblies, for example sums of Gaussian peaks for stoichiometry, or sums of Gamma distributions for the diffusivity. It generates handy `.sfit` files for later use e.g. with the plotting scripts above.
+
+### Periodicity
 
 
 
-## Analysis for Total Protein Number (aka. total 'copy' number of labelled molecules)
+### Total Protein Number (aka. 'total molecule number', or 'total copy number' of labelled molecules)
 
-For specific microbiology datasets, the `CoPro` pipeline in ADEMScode is appropriate (see )
+Analysis for total number of molecules does not use ADEMScode.  For specific microbiology datasets, the `CoPro` pipeline in ADEMScode is appropriate (see )
 In the SlimVar publication (Payne-Dwyer et al, 2024), the total number of proteins per plant nucleus are estimated from the images using an ImageJ script instead of a MATLAB script.
 
