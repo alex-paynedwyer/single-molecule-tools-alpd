@@ -115,10 +115,10 @@ To determine stoichiometry, periodicity or total molecule number, one must first
 Broadly, three methods are available to estimate this, listed in order of increasing accuracy for the specific use case:
 
 ### In vitro
-1. Immobilise purified fluorophores to a surface, then track and find the average intensity of known single-molecule events (column 5 of SpotCh1/2 in ADUs).  
+1. Immobilise purified fluorophores to a surface, then track and find the average intensity of known single-molecule events (in ADUs, see column 5 of `SpotsCh1` and `SpotsCh2`).  
 
 ### In vivo
-2. Extensively photobleach a sample, then track and find the average intensity of assumed single-molecule events (column 5 of SpotCh1/2 in ADUs).  
+2. Extensively photobleach a sample, then track and find the average intensity of assumed single-molecule events (in ADUs, see column 5 of `SpotsCh1` and `SpotsCh2`).  
 3. Track (or overtrack) and apply the Chung-Kennedy filter, then calculate the photobleaching step heights (in ADUs).  
 
 #### Intensity distribution
@@ -180,8 +180,8 @@ The analyser script also appends the following rows to the foci arrays, resultin
 
 The `output` structure also includes collated summary lists of specific metrics and properties for rapid interrogation, e.g.:  
 
-`LinkedStoichsList` is a list of all stoichiometry values for colocalised tracks, while  
-`PairedStoichsList` shows the colocalised tracks as pairs next to each other so that they retain correlation;  
+`LinkedStoichsList` is a  list of all normalised stoichiometry values for colocalised tracks in each single channel, while  
+`PairedStoichsList` shows the colocalised tracks of both channels as correlated pairs;  
 `unlinkDiffsMean` summarises the diffusivities of uncolocalised tracks in the format `[Ch1 mean, Ch2 mean; Ch1 s.e.m., Ch2 s.e.m.]`.
 
 ### Handling and visualising the analysis
