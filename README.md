@@ -53,9 +53,10 @@ It also renames image stack files by timestamp using the metadata.txt files gene
 
 ## Segmentation
 
-Note: It is most efficient to crop the input images to the region of interest before segmentation, since this avoids ADEMScode having to perform computationally heavy tracking outside the user's region of interest.  
+*NB*: It is most efficient to crop the input images to the region of interest _before_ segmentation, since this avoids ADEMScode having to perform computationally heavy tracking outside the user's region of interest.  
 
-ADEMScode includes various custom functions for segmenting 2D areas of images, for example cells or organelles.  Each segmentation method creates masks for distinct objects:
+ADEMScode includes various custom functions for segmenting 2D areas of images, for example cells or organelles.  
+Each segmentation method creates masks for distinct objects which are used later to group sets of tracks:
 
 `thresholdSegment`: Defines a pixel intensity threshold using various different methods, such as the Otsu threshold.  
 `edgeSegment`: Detects edges in the image and dilates to fill in regions in between.  
@@ -131,10 +132,12 @@ Plotting the intensity distribution of foci is useful in cases of sufficiently l
 
 `overTrackAll`: a script to overtrack multiple fields of view in a batch.  
 
+`plotOvertracks`: a script to visualise selected traces from the overtracked data.
+
 ## Analysis for Stoichiometry, Diffusivity, Periodicity and Colocalisation
 
-This step applies *sifting* (and if specified, segmentation masks) to the foci, then constructs the sifted tracks.  
-It summarises the track properties including stoichiometry and diffusivity, and tests for pairwise colocalisation between tracks.  
+The analysis step applies *sifting* (and if specified, segmentation masks) to the foci, then constructs the sifted tracks.   Where segmentation is applied, typically only the tracks within the segmented areas are retained.
+The analysis step then tests for pairwise colocalisation between tracks, and summarises the track properties including stoichiometry and diffusivity according to the colocalisation status.  
 
 ### Routines
 
