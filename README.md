@@ -88,7 +88,7 @@ The tracking software consists of a series of functions for opening image sequen
 `LinkSpots4`: links foci into tracks based on proximity.  
 
 ### Output
-The output ('**`_TRACKS.mat`**') includes the following:  
+The output ('**`_TRACKS.mat`**') includes a copy of the input hyperparameters `p`, plus the following:  
 `frame_average`: an average of the first few frames in the image sequence for reference.  
 `SpotsCh1` and `SpotsCh2`: arrays of foci from one image sequence in the respective detector channels 1 and 2. Each row corresponds to an individual localisation. The columns contain the following information:  
 1.	X coordinate (pixels)
@@ -145,7 +145,7 @@ It uses same the list of hyperparameters '`params`' across the batch.
 
 ### Output
 
-The output file ('**`_output.mat`**') includes a copy of the input `params` and an `output` structure, which includes the arrays `TrackArrayCh1` and `TrackArrayCh2` that describe stoichiometry, diffusivity and other properties by track. These are collated from all image sequences in the two respective detector channels.  
+This version of ADEMScode generates an output file ('**`_output.mat`**') for each analysis run.  It includes a copy of the input `params` and an `output` structure, which includes the arrays `TrackArrayCh1` and `TrackArrayCh2` that describe stoichiometry, diffusivity and other properties by track. These are collated from all image sequences in the two respective detector channels.  
 Each row contains the information for an individual sifted track. The columns contain the following information:  
 1.	Segment index
 2.	Initial brightness of track (ADU detector counts; when normalised by the characteristic molecular brightness, this is the value that gives the track's stoichiometry as published)
@@ -172,17 +172,16 @@ The analyser script also appends the following rows to the foci arrays, resultin
 18. Segment index  
 
 The `output` structure also includes collated summary lists of specific metrics and properties for rapid interrogation, e.g.:  
+
 `LinkedStoichsList` is a list of all stoichiometry values for colocalised tracks, while  
 `PairedStoichsList` shows the colocalised tracks as pairs next to each other so that they retain correlation;  
 `unlinkDiffsMean` summarises the diffusivities of uncolocalised tracks in the format `[Ch1 mean, Ch2 mean; Ch1 s.e.m., Ch2 s.e.m.]`.
-
-
 
 ### Handling and visualising the analysis
 
 This version of ADEMScode includes several scripts to aid interrogation of the data and produce plots quickly and reproducibly, with aggregation of, or comparison between, different experimental datasets.  
 
-`combineTrackingOutputs`: a script to aggregate multiple `output.mat` files, for example replicates in the same experiment.  
+`combineTrackingOutputs`: a script to aggregate multiple `output.mat` files, for example replicates of the same experiment tracked separately.  It stores the respective hyperparameter sets as `paramsA` and `paramsB`.
 `BrunnerMunzelTest`: a two-tailed, non-parametric statistical test to distinguish lists of floating point values (e.g. diffusivity, stoichiometry of many tracks).  
 
 The following scripts use a specific `output.mat` file as input to visualise the distribution of a particular metric for either colocalised, uncolocalised or total tracks in one of the channels. 
