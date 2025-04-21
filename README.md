@@ -30,10 +30,10 @@ Methods in Molecular Biology (Volume 2476): Chromosome Architecture pp 311-328 (
 Also available via [open access preprint](https://arxiv.org/pdf/2108.13743)
 
 Novel functionality here includes:  
-- new methods for segmentation and two-channel alignment/registration
-- saved `output.mat` files summarising the analysis
-- periodicity: distribution-based estimates of periodic clustering in molecular assemblies  
-- scripts for visualising correlated properties of tracks colocalised across two channels.  
+- new methods for segmentation, margin cropping and two-channel alignment/registration
+- saves `output.mat` files summarising the analysis
+- nearest-neighbour method to estimate periodicity in molecular assemblies  
+- scripts for visualising properties of tracks by colocalisation across two channels.  
 
 ## Set-up
 
