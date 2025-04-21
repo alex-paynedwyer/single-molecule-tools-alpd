@@ -65,7 +65,7 @@ It also renames image stack files by timestamp using the metadata.txt files gene
 
 ## Segmentation
 
-*NB*: It is most efficient to crop the input images to the region of interest _before_ segmentation, since this avoids ADEMScode having to perform computationally heavy tracking outside the user's region of interest.  
+**NB**: It is most efficient to crop the input images to the region of interest _before_ segmentation, since this avoids ADEMScode having to perform computationally heavy tracking outside the user's region of interest.  
 
 ADEMScode includes various custom functions for segmenting 2D areas of images, for example cells or organelles.  
 Each segmentation method creates masks for distinct objects which are used later to group sets of tracks:
@@ -151,7 +151,8 @@ Plotting the intensity distribution of foci is useful in cases of sufficiently l
 
 The analysis step applies *sifting* (and if specified, segmentation masks) to the foci, then constructs the sifted tracks.   Where segmentation is applied, typically only the tracks within the segmented areas are retained.
 The analysis step then tests for pairwise colocalisation between tracks, and summarises the track properties including stoichiometry and diffusivity according to the colocalisation status.  
-*NB*: for the purposes of the code, 'linked / linking' is synonymous with 'colocalised / colocalising'.
+
+**NB**: for the purposes of the code, 'linked / linking' is synonymous with 'colocalised / colocalising'.
 
 ### Routines
 
