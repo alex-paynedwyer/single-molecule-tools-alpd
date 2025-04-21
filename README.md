@@ -76,6 +76,7 @@ Each segmentation method creates masks for distinct objects which are used later
 `watershedSegment`: Requires input segmentation `seedMask` from which a watershed transform is nucleated and applied to the image.  
 
 The output ('**`_segmentation.mat`**') includes `CellObject`: a binary mask array the same size as the input image.  
+
 `mask2seg` can be used to generate `_segmentation.mat` format directly from 2D TIFFs, for example if segmentation was performed outside MATLAB.  
 
 `overlayAllSegments`: show the initial frame average with the segments overlaid.  Also fits and shows semicircular-capped rectangles (designed for use for cell segmentation of rod-shaped bacteria).
@@ -215,9 +216,13 @@ The following scripts use a specific `output.mat` file as input to visualise the
 Various options include:  scatterplots, histograms, kernel density estimates or violin/beeswarm-style plots with boxplot (based on Jonas Dorn's `distributionPlot`).  
 
 `plotTrackFrequency`: plots the observed numbers of tracks per segment.  
+
 `plotStoichiometry`: plots the stoichiometries of tracks in molecules.  
+
 `plotDiffusivity`: plots the diffusivities of tracks in µm²/s.  
+
 `plotDwellTime`: plots the dwell times (duration over which tracks are colocalised) in ms.  
+
 `plotNearestNeighbourPeriodicity`: plots the periodicity, i.e. the distribution of peak-to-peak intervals in the stoichiometry, and returns the modal ± s.e.m. periodicity in molecules.   
 It is also used to simulate control data (use the flag `simulate=1`); for many runs, or for negative controls, use the script `SimulateControlPeriodicity`.  
 
