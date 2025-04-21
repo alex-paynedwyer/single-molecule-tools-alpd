@@ -127,12 +127,13 @@ Plotting the intensity distribution of foci is useful in cases of sufficiently l
 
 #### Overtracking and filtering
 
-`overTracker`: overtracking is the third method, used to see single photobleach steps by tracking them beyond the time at which they fall below the SNR threshold for sifting, typically due to near-complete photobleaching.  
+`overTracker`: overtracking is the third method, used to see single photobleach steps by tracking them beyond the time at which they fall below the SNR threshold for sifting, typically due to near-complete photobleaching. This generates a modified tracking file called ('**`_BASELINE.mat`**').
+
 `CKall`: the intensity of foci are typically too noisy to extract steps using direct averages, so edge-preserving filters are needed to smooth the traces. This script will run a Chung-Kennedy filter over the data and plot the individual photobleaching traces.  Aligning the plateaus and plotting the filtered intensity yields the distribution of photobleaching step heights. The modal value is the characteristic molecular brightness.  
 
-`overTrackAll`: a script to overtrack multiple fields of view in a batch.  
+`overTrackAll`: a script to overtrack multiple fields of view in a batch, producing multiple `_BASELINE.mat` files.  
 
-`plotOverTracks`: a script to visualise selected traces from the overtracked data.
+`plotOverTracks`: a script to take the overtracked data from a `_BASELINE.mat` file and visualise selected traces.
 
 ## Analysis for Stoichiometry, Diffusivity, Periodicity and Colocalisation
 
