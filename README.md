@@ -84,8 +84,11 @@ The output ('**`_segmentation.mat`**') includes `CellObject`: a binary mask arra
 
 The tracking software consists of a series of functions for opening image sequences, tracking bright particles over time and quantifying their intensity.  
 
-`tracker`: the main tracking program, whose inputs are the filename (or folder name for unstacked .tifs) and a list of hyperparameters '`p`'.    
+`trackOneField`: the main tracking program, whose inputs are the filename (or folder name for unstacked .tifs) and a list of hyperparameters '`p`'.    
 `[SpotsCh1, SpotsCh2, frame_average, p, meta_data, image_data, spotImages] = tracker(fileName,p)`  
+
+`trackAllFields`: performs the same function in a loop over multiple image files in the nested folder structure, thereby aggregating results corresponding to multiple fields of view in the same dataset.
+It uses same the list of hyperparameters '`p`' across the batch.
 
 ### Parameters and settings
 `p` is the parameter structure which is read in from the workspace, or otherwise set in code (see code comments for details):  
