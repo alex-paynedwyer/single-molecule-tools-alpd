@@ -4,7 +4,7 @@ This repository comprises a package of Matlab functions and scripts called **ADE
 
 This package is focused on the analysis of Slimfield and **SlimVar** fluorescence microscopy data (see below); it may also be broadly useful for localisation microscopy, STORM, PALM, FRAP, step-wise photobleaching and epifluorescence microscopy data. 
 
-The original version, ADEMScode v2.1, was authored by Adam Wollman and Isabel Llorente-Garcia, c. 2018, coordinated by Mark Leake's research lab in the [Physics of Life group](https://www.york.ac.uk/physics-engineering-technology/research/physics-of-life/). It was forked here from [single-molecule-tools](https://awollman.github.io/single-molecule-tools/) maintained by Adam Wollman, now at Newcastle University, UK.  
+The original version, ADEMScode v2.1, was authored by Adam Wollman and Isabel Llorente-Garcia, c. 2018, coordinated by Mark Leake's research lab in the [Physics of Life group](https://www.york.ac.uk/physics-engineering-technology/research/physics-of-life/). It was forked here from [single-molecule-tools](https://awollman.github.io/single-molecule-tools/) maintained by Adam Wollman, now at Newcastle University, UK, and on which the following guide is also based.  
 
 Please also see [PySTACHIO](https://github.com/ejh516/pystachio-smt); it is an open-source port of ADEMScode v2.1 written in Python 3 by researchers at York's Physics of Life group as described in [Shepherd et al. 2021](https://doi.org/10.1016/j.csbj.2021.07.004).
 
@@ -29,7 +29,11 @@ AL Payne-Dwyer and MC Leake
 Methods in Molecular Biology (Volume 2476): Chromosome Architecture pp 311-328 (2022)  
 Also available via [open access preprint](https://arxiv.org/pdf/2108.13743)
 
-Novel functionality here includes saving of output files, distribution-based estimates of periodic clustering in molecular assemblies, as well as scripts for visualising correlated properties of tracks colocalised across two channels.  
+Novel functionality here includes:  
+- new methods for segmentation and two-channel alignment/registration
+- saved `output.mat` files summarising the analysis
+- periodicity: distribution-based estimates of periodic clustering in molecular assemblies  
+- scripts for visualising correlated properties of tracks colocalised across two channels.  
 
 ## Set-up
 
