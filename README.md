@@ -33,7 +33,8 @@ Novel functionality here includes:
 - new methods for segmentation, margin cropping and two-channel alignment/registration
 - saves `output.mat` files summarising the analysis
 - nearest-neighbour method to estimate periodicity in molecular assemblies  
-- scripts for visualising properties of tracks by colocalisation across two channels.  
+- scripts for visualising properties of tracks by colocalisation across two channels
+- natural indexing instead of alphanumeric, using NaturalSort (Stephen Cobeldick)
 
 ## Set-up
 
@@ -141,9 +142,9 @@ Plotting the intensity distribution of foci is useful in cases of sufficiently l
 
 `overTracker`: overtracking is the third method, used to see single photobleach steps by tracking them beyond the time at which they fall below the SNR threshold for sifting, typically due to near-complete photobleaching. This generates a modified tracking file called ('**`_BASELINE.mat`**').
 
-`CKall`: the intensity of foci are typically too noisy to extract steps using direct averages, so edge-preserving filters are needed to smooth the traces. This script will run a Chung-Kennedy filter over the data and plot the individual photobleaching traces.  Aligning the plateaus and plotting the filtered intensity yields the distribution of photobleaching step heights. The modal value is the characteristic molecular brightness.  
-
 `overTrackAll`: a script to overtrack multiple fields of view in a batch, producing multiple `_BASELINE.mat` files.  
+
+`CKall`: the intensity of foci are typically too noisy to extract steps using direct averages, so edge-preserving filters are needed to smooth the traces. This script will run a Chung-Kennedy filter over the data and plot the individual photobleaching traces.  Aligning the plateaus and plotting the filtered intensity yields the distribution of photobleaching step heights. The modal value is the characteristic molecular brightness.  
 
 `plotOverTracks`: a script to visualise selected traces of foci intensity over time, using either tracking data (`_TRACKS.mat`) or preferably, overtracking data from a `_BASELINE.mat` file.
 
@@ -206,7 +207,7 @@ This version of ADEMScode includes several scripts to aid interrogation of the d
 `BrunnerMunzelTest`: a two-tailed, non-parametric statistical test to distinguish lists of floating point values (e.g. diffusivity, stoichiometry of many tracks).  
 
 The following scripts use a specific `output.mat` file as input to visualise the distribution of a particular metric for either colocalised, uncolocalised or total tracks in one of the channels.  
-Various options include:  scatterplots, histograms, violin/beeswarm-style plots with boxplot, or kernel density estimates.  
+Various options include:  scatterplots, histograms, kernel density estimates or violin/beeswarm-style plots with boxplot (based on Jonas Dorn's `distributionPlot`).  
 
 `plotTrackFrequency`: plots the observed number of tracks per segment.
 `plotStoichiometry`: plots the stoichiometry of tracks
