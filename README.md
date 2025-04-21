@@ -117,28 +117,27 @@ Broadly, three methods are available to estimate this, listed in order of increa
 2. Extensively photobleach a sample, then track and find the average intensity of assumed single-molecule events (column 5 of SpotCh1/2 in ADUs).  
 3. Track (or overtrack) and apply the Chung-Kennedy filter, then calculate the photobleaching step heights (in ADUs).  
 
-### Intensity distribution
+#### Intensity distribution
 `charMolBrightness`: for methods 1 and 2, this script will take tracking data and plot the intensity of foci detected after at least one 1/e photobleaching decay time.  
+Plotting the intensity distribution of foci is useful in cases of sufficiently low background; you should have one clear peak at the characteristic molecular brightness and one close to the detector baseline.
 
-#### Overtracking
-`overTracker`: overtracking is a method 3 to see single photobleach steps by tracking them beyond the time at which they fall below the SNR threshold for sifting, typically due to complete photobleaching. Plotting the intensity distribution here again is useful as you should have one clear peak at the characteristic molecular brightness and one close to the detector baseline.
+#### Overtracking and filtering
 
-#### Filtering
-`CKall`: the intensity of foci are typically too noisy to extract steps using direct averages, so edge-preserving filters are needed to smooth the traces. This script will run a Chung-Kennedy filter over the data and plot the individual photobleaching traces.  Aligning the plateaus and plotting the filtered intensity yields the distribution of photobleaching step heights. The modal value is the characteristic molecular brightness.
+`overTracker`: overtracking is the third method, used to see single photobleach steps by tracking them beyond the time at which they fall below the SNR threshold for sifting, typically due to near-complete photobleaching.  
+`CKall`: the intensity of foci are typically too noisy to extract steps using direct averages, so edge-preserving filters are needed to smooth the traces. This script will run a Chung-Kennedy filter over the data and plot the individual photobleaching traces.  Aligning the plateaus and plotting the filtered intensity yields the distribution of photobleaching step heights. The modal value is the characteristic molecular brightness.  
 
+`overTrackAll`: a script to overtrack multiple fields of view in a batch.  
 
 ## Analysis for Stoichiometry, Diffusivity and Colocalisation
 
-This step applies sifting (and if specified, segmentation masks) to the foci then constructs the sifted tracks. 
+This step applies *sifting* (and if specified, segmentation masks) to the foci, then constructs the sifted tracks.  
 It summarises the track properties including stoichiometry and diffusivity, and tests for pairwise colocalisation between tracks.  
 
 ### Routines
 
-`colocalisedTrackAnalyser` is a function that runs on a single file containing two colour channels.
-Inputs: tracking file (`TRACKS.mat`) containing the `SpotCh1` and `SpotCh2` arrays; optional segmentation mask '`_segmentation.mat`'; image filename and a hyperparameter structure `params`.  
-Outputs: an output file (`OUTPUT.mat`) containing the `trackArrayCh1` and `trackArrayCh2` arrays that describe stoichiometry, diffusivity and other properties by track.
+`colocalisedTrackAnalyser` is a function that runs on a single field of view containing two colour channels.  The main input is the tracking file (`TRACKS.mat`) containing the `SpotCh1` and `SpotCh2` arrays; it also requires the original image filename and a hyperparameter structure `params`.  Optionally, it can apply a segmentation mask '`_segmentation.mat`'.
 
-`sampleTrackAnalyser` performs the analyser function in a loop over multiple image files in a nested folder structure, thereby aggregating results corresponding to multiple fields of view in the same dataset.
+`sampleTrackAnalyser` performs the same function in a loop over multiple image files in a nested folder structure, thereby aggregating results corresponding to multiple fields of view in the same dataset.
 It uses same the list of hyperparameters '`params`' across the batch.    
 
 ### Parameters and settings
@@ -146,7 +145,8 @@ It uses same the list of hyperparameters '`params`' across the batch.
 
 ### Output
 
-The output ('**`_output.mat`**') includes the arrays `TrackArrayCh1` and `TrackArrayCh2` collated from all image sequences in the two respective detector channels.  
+The output file ('**`_output.mat`**') includes the arrays `TrackArrayCh1` and `TrackArrayCh2` that describe stoichiometry, diffusivity and other properties by track.  
+These are collated from all image sequences in the two respective detector channels.  
 Each row contains the information for an individual sifted track. The columns contain the following information:  
 1.	Segment index
 2.	Initial brightness of track (ADU detector counts; when normalised by the characteristic molecular brightness, this is the value that gives the track's stoichiometry as published)
