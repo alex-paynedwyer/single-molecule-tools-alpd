@@ -80,12 +80,12 @@ The tracking software consists of a series of functions for opening image sequen
 `ImEx1`: uses the OME `bftools` and `bioformats` modules to open various life science image formats.  
 `LaserOn3`: calculates the first illuminated frame based on the maximum total intensity; for use when the excitation is not triggered by the camera.  
 `FrameAverage2`: calculates an image averaged over a set number of frames.  
-`findSpots4`: finds candidate spots using a range of deterministic kernel methods including top-hat filtering, Otsu thresholding and/or morphological transformations.  
-`findSpotCentre3`: performs iterative Gaussian masking to find spot centre and total intensity.  
+`findSpots4`: finds candidate foci using a range of deterministic kernel methods including top-hat filtering, Otsu thresholding and/or morphological transformations.  
+`findSpotCentre3`: performs iterative Gaussian masking to find foci centre and total intensity.  
 `fit2DgaussianFixedCenter2`: fits a constrained elliptical Gaussian mask to find `sigma_x`,`sigma_y` and central intensity.  
 `MergeCoincidentCandidates2`: will use pairwise distances to remove candidates which are too close to be resolved.  
 `iterate1DgaussianFixedCenter2`: finds the width of the point-spread-function (PSF) by masking with Gaussian masks of different sizes.  
-`LinkSpots4`: links spots into tracks based on proximity.  
+`LinkSpots4`: links foci into tracks based on proximity.  
 
 ### Output
 The output ('**`_TRACKS.mat`**') includes the following:  
@@ -95,12 +95,12 @@ The output ('**`_TRACKS.mat`**') includes the following:
 2.	Y coordinate (pixels)
 3.	Clipping_flag (not used)
 4.	Mean local background pixel intensity (ADU counts)
-5.	Total spot intensity, background corrected (this is the value in ADU detector counts used to calculate the track stoichiometry)
-6.	X spot sigma width (pixels)
-7.	Y spot sigma width (pixels)
-8.	Peak intensity in a fitted Gaussian (ADU counts)
-9.	Frame number this foci was found in
-10.	Track number, foci in the same track have the same track number
+5.	Total foci intensity, background corrected (this is the value in ADU detector counts used to calculate the track stoichiometry)
+6.	X foci diameter, standard deviation (pixels)
+7.	Y foci diameter, standard deviation (pixels)
+8.	Peak intensity in a Gaussian fit (ADU counts)
+9.	Frame index; the frame where the foci appear in the sequence
+10.	Track index; foci in the same track have the same track index
 11.	Signal to noise ratio (this is used later for the **sifting** step)
 12.	Frame in which laser exposure began.
 
@@ -152,7 +152,7 @@ Each row contains the information for an individual sifted track. The columns co
 2.	Initial brightness of track (ADU detector counts; when normalised by the characteristic molecular brightness, this is the value that gives the track's stoichiometry as published)
 3.	Diffusivity (µm²/s; this is the track's diffusivity as published)
 4.	Diffusivity from first displacement (µm²/s)
-5.	Mean spot radius (pixels)
+5.	Mean foci diameter, standard deviation (pixels)
 6.	Track index within this channel
 7.	Filename ID
 8.	Index of the longest colocalised track in the other channel
@@ -163,7 +163,8 @@ Each row contains the information for an individual sifted track. The columns co
 13. Track diameter perpendicular to segment long axis (pixels)
 14. Length of track (in frames; post sifting so all tracks have 3+ frames)
 
-This script also appends the following rows to the SpotCh1/2 arrays for the sifted foci:  
+The analyser script also appends the following rows to the `SpotCh1` and `SpotCh2` arrays for the sifted foci:  
+
 13. Index of colocalised foci in the other channel  
 14. Overlap integral (a metric to estimate extent of colocalisation)  
 15.	Track index of colocalised foci in the other channel  
@@ -174,7 +175,7 @@ This script also appends the following rows to the SpotCh1/2 arrays for the sift
 Useful scripts:  
 
 `combineTrackingOutputs`: a script to aggregate multiple `output.mat` files, for example replicates in the same experiment.  
-`BrunnerMunzelTest`: a two-tailed, nonparametric statistical test to distinguish samples of floating point values (e.g. diffusivity, stoichiometry of many tracks).  
+`BrunnerMunzelTest`: a two-tailed, non-parametric statistical test to distinguish samples of floating point values (e.g. diffusivity, stoichiometry of many tracks).  
 
 ## Analysis for Stoichiometry Periodicity
 
