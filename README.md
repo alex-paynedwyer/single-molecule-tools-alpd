@@ -214,12 +214,12 @@ This version of ADEMScode includes several scripts to aid interrogation of the d
 The following scripts use a specific `output.mat` file as input to visualise the distribution of a particular metric for either colocalised, uncolocalised or total tracks in one of the channels.  
 Various options include:  scatterplots, histograms, kernel density estimates or violin/beeswarm-style plots with boxplot (based on Jonas Dorn's `distributionPlot`).  
 
-`plotTrackFrequency`: plots the observed numbers of tracks per segment.
-`plotStoichiometry`: plots the stoichiometries of tracks in molecules.
-`plotDiffusivity`: plots the diffusivities of tracks in µm²/s.
-`plotDwellTime`: plots the dwell times (duration over which tracks are colocalised) in ms.
-`plotNearestNeighbourPeriodicity`: plots the periodicity, i.e. the distribution of peak-to-peak intervals in the stoichiometry, and returns the modal ± s.e.m. periodicity in molecules.  
-It is also used to simulate control data (use the flag `simulate=1`); for many runs, or for negative controls, use the script `SimulateControlPeriodicity`.
+`plotTrackFrequency`: plots the observed numbers of tracks per segment.  
+`plotStoichiometry`: plots the stoichiometries of tracks in molecules.  
+`plotDiffusivity`: plots the diffusivities of tracks in µm²/s.  
+`plotDwellTime`: plots the dwell times (duration over which tracks are colocalised) in ms.  
+`plotNearestNeighbourPeriodicity`: plots the periodicity, i.e. the distribution of peak-to-peak intervals in the stoichiometry, and returns the modal ± s.e.m. periodicity in molecules.   
+It is also used to simulate control data (use the flag `simulate=1`); for many runs, or for negative controls, use the script `SimulateControlPeriodicity`.  
 
 The `cftool` fitting suite in MATLAB can also be used to fit models to the experimental data to discriminate heterogeneous states of assemblies, for example sums of Gaussian peaks for stoichiometry, or sums of Gamma distributions for the diffusivity. It generates handy `.sfit` files for later use e.g. with the plotting scripts above.
 
