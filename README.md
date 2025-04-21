@@ -133,7 +133,7 @@ Plotting the intensity distribution of foci is useful in cases of sufficiently l
 
 `overTrackAll`: a script to overtrack multiple fields of view in a batch, producing multiple `_BASELINE.mat` files.  
 
-`plotOverTracks`: a script to take the overtracked data from a `_BASELINE.mat` file and visualise selected traces.
+`plotOverTracks`: a script to visualise selected traces of foci intensity over time, using either tracking data (`_TRACKS.mat`) or preferably, overtracking data from a `_BASELINE.mat` file.
 
 ## Analysis for Stoichiometry, Diffusivity, Periodicity and Colocalisation
 
