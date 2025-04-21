@@ -88,7 +88,7 @@ The tracking software consists of a series of functions for opening image sequen
 `[SpotsCh1, SpotsCh2, frame_average, p, meta_data, image_data, spotImages] = tracker(fileName,p)`  
 
 `trackAllFields`: performs the same function in a loop over multiple image files in the nested folder structure, thereby aggregating results corresponding to multiple fields of view in the same dataset.
-It uses same the list of hyperparameters '`p`' across the batch.
+It uses same the list of hyperparameters '`p`' across the batch.  If `registerchannels` is nonzero, it will also use the affine `tform` to transform the channel 2 tracks.
 
 ### Parameters and settings
 `p` is the parameter structure which is read in from the workspace, or otherwise set in code (see code comments for details):  
