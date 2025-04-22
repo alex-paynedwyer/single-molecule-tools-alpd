@@ -236,6 +236,13 @@ Analysis for total number of molecules per segment is independent of tracking.  
 
 For certain datasets, especially in microbiology e.g. monolayers of bacteria or yeast, the `CoPro` convolution pipeline in MATLAB is appropriate. It uses the characteristic molecular brightness and the segmentation structure in the same way as detailed above for ADEMScode.  It is based on [Adam Wollman's version](https://awollman.github.io/single-molecule-tools/deconvolution.html) detailed in [Wollman et al. 2017](https://doi.org/10.7554/eLife.27451).  The relevant functions in v2.2 are: `TotalNumberSphereSegment` and `TotalNumberRodSegment` depending on the expected 3D shape of the segmented volume.  These are designed for cells not much larger than a few depths-of-field, i.e. no greater extent than a few microns in z.
 
-In the SlimVar publications (Payne-Dwyer et al, 2024), the total protein numbers are estimated from image stacks of plant nuclei using the dedicated Fiji/ImageJ macro `MonoCropper.ijm`, following a similar algorithm but without the convolution step.
+In the SlimVar publications (Payne-Dwyer et al, 2024), the total protein numbers are estimated from image stacks of plant nuclei using the dedicated [Fiji/ImageJ](https://imagej.net/software/fiji/) macro `MonoCropper.ijm`, following a similar algorithm but without the convolution step.
+
+## Example data
+
+Two datasets are included in this repository with the associated input/output:
+
+1. standard Slimfield: Mig1-GFP transcription factors in monolayer of S. cerevisiae yeast - basic input & output
+2. SlimVar: 
 
 
