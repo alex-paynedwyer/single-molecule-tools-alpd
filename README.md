@@ -141,8 +141,7 @@ Broadly, three methods are available to estimate this, listed in order of increa
 3. Track (or overtrack) and apply the Chung-Kennedy filter, then calculate the photobleaching step heights (in ADUs).  
 
 #### Intensity distribution
-`fastCharMolBrightness`: for methods 1 and 2, this script will take tracking data and plot the intensity of foci detected after at least one 1/e photobleaching decay time.  
-Plotting the intensity distribution of foci is useful in cases of sufficiently low background; you should have one clear peak at the characteristic molecular brightness and one close to the detector baseline.
+`fastCharMolBrightness`: for methods 1 and 2, this script will take tracking data and plot the intensity of foci detected after at least one 1/e photobleaching decay time.  Plotting the intensity distribution of foci is useful in cases of sufficiently long acquisition and low background; you should have one clear peak at the characteristic molecular brightness and one close to the detector baseline.
 
 #### Overtracking and filtering
 
