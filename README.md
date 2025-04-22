@@ -243,6 +243,6 @@ In the SlimVar publications (Payne-Dwyer et al, 2024), the total protein numbers
 Two datasets are included in this repository with the associated input/output:
 
 1. standard Slimfield: Mig1-GFP transcription factors in monolayer of S. cerevisiae yeast - basic input & output
-2. SlimVar: 
+2. SlimVar: VIN3-GFP after six weeks of cold exposure; 10 fields-of-view & tracked analysis & output files.
 
 
