@@ -221,7 +221,7 @@ Various options include:  scatterplots, histograms, kernel density estimates or 
 
 `plotDiffusivity`: plots the diffusivities of tracks in µm²/s.  
 
-`plotDwellTime`: plots the dwell times (duration over which tracks are colocalised) in ms.  
+`plotResidenceTime`: plots the residence times (duration over which tracks are colocalised) in ms.  
 
 `plotNearestNeighbourPeriodicity`: plots the periodicity, i.e. the distribution of peak-to-peak intervals in the stoichiometry, and returns the modal ± s.e.m. periodicity in molecules.   
 It is also used to simulate control data (use the flag `simulate=1`); for many runs, or for negative controls, use the script `SimulateControlPeriodicity`.  
